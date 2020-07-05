@@ -1,0 +1,7 @@
+/* This file contains global sass styles applied to the entire site */
+
+.theme--light {
+    &.v-application {
+        background: $gray !important;
+    }
+}
