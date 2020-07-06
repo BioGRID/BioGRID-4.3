@@ -9,8 +9,34 @@
             :elevate-on-scroll="true"
         >
             <v-app-bar-nav-icon color="white" @click.stop="toggleNavDrawerVisible" />
-            <v-toolbar-title v-text="title" />
+            <v-toolbar-title>
+                <nuxt-link to="/">
+                    <v-img
+                        src="/images/biogrid_logo.png"
+                        max-height="60"
+                        contain
+                        position="left center"
+                    />
+                </nuxt-link>
+            </v-toolbar-title>
             <v-spacer />
+            <v-btn
+                text
+                dark
+                large
+                nuxt
+                to="/test"
+            >
+                Test
+            </v-btn>
+            <v-btn
+                icon
+                dark
+            >
+                <v-icon>
+                    mdi-twitter
+                </v-icon>
+            </v-btn>
         </v-app-bar>
     </header>
 </template>

@@ -75,34 +75,33 @@ export default {
     ** vuetify module configuration
     ** https://github.com/nuxt-community/vuetify-module
     */
- vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-        dark: false,
-        themes: {
-            light: {
-                primary: '#1B4079',
-                accent: '#F7DEB7',
-                secondary: '#3D405B',
-                tertiary: '#F2CC8F',
-                info: '#3D405B',
-                warning: '#DE9E36',
-                error: '#E07A5F',
-                success: '#81B29A',
-                background: '#FF0'
-            },
-            dark: {
-                primary: colors.blue.darken2,
-                accent: colors.grey.darken3,
-                secondary: colors.amber.darken3,
-                info: colors.teal.lighten1,
-                warning: colors.amber.base,
-                error: colors.deepOrange.accent4,
-                success: colors.green.accent3
+    vuetify: {
+        customVariables: ['~/assets/variables.scss'],
+        theme: {
+            dark: false,
+            themes: {
+                light: {
+                    primary: '#1B4079',
+                    accent: '#50C2BD',
+                    secondary: '#3E405B',
+                    tertiary: '#FCD0A1',
+                    info: '#BDADEA',
+                    warning: '#DE9E36',
+                    error: '#EF798A',
+                    success: '#3E5622'
+                },
+                dark: {
+                    primary: colors.blue.darken2,
+                    accent: colors.grey.darken3,
+                    secondary: colors.amber.darken3,
+                    info: colors.teal.lighten1,
+                    warning: colors.amber.base,
+                    error: colors.deepOrange.accent4,
+                    success: colors.green.accent3
+                }
             }
         }
-    }
-  },
+    },
     /*
     ** Build configuration
     ** See https://nuxtjs.org/api/configuration-build/

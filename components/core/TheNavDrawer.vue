@@ -9,20 +9,22 @@
             fixed
             app
         >
-            NAV DRAWER
             <v-list>
                 <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                :to="item.to"
-                router
-                exact
+                    v-for="(item, i) in items"
+                    :key="i"
+                    :to="item.to"
+                    router
+                    exact
+                    dark
                 >
                 <v-list-item-action>
-                    <v-icon>{{ item.icon }}</v-icon>
+                    <v-icon color="white">
+                        {{ item.icon }}
+                    </v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title v-text="item.title" />
+                    <v-list-item-title class="white--text" v-text="item.title" />
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -40,7 +42,8 @@ export default class TheNavDrawer extends Vue {
     private miniVariant: boolean = false;
     private title: string = process.env.SHORT_TITLE || 'BioGRID';
     private items = [
-        { to: '/inspire', icon: 'mdi-up-arrow', title: 'INSPIRE' }
+        { to: '/', icon: 'mdi-home-circle', title: 'HOME' },
+        { to: '/test', icon: 'mdi-ab-testing', title: 'TEST' }
     ]
 }
 </script>
