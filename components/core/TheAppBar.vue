@@ -8,8 +8,12 @@
             class="white--text"
             :elevate-on-scroll="true"
         >
-            <v-app-bar-nav-icon color="white" @click.stop="toggleNavDrawerVisible" />
-            <v-toolbar-title>
+            <v-app-bar-nav-icon
+                color="white"
+                class="hidden-md-and-up mr-3"
+                @click.stop="toggleNavDrawerVisible"
+            />
+            <v-toolbar-title class="pl-0">
                 <nuxt-link to="/">
                     <v-img
                         src="/images/biogrid_logo.png"
@@ -26,12 +30,14 @@
                 large
                 nuxt
                 to="/test"
+                class="hidden-sm-and-down"
             >
                 Test
             </v-btn>
             <v-btn
                 icon
                 dark
+                class="hidden-sm-and-down"
             >
                 <v-icon>
                     mdi-twitter
@@ -47,7 +53,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component
 export default class TheFooter extends Vue {
     private clipped: boolean = false;
-    private title: string = process.env.SHORT_TITLE || 'BioGRIDasdfasdf';
+    private title: string = process.env.SHORT_TITLE || 'BioGRID';
 
     private toggleNavDrawerVisible () {
         this.$store.dispatch('toggleNavDrawerVisible')
