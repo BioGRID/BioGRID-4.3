@@ -3,15 +3,27 @@
         <v-sheet color="secondary">
             <v-container class="pa-0">
                 <v-card color="secondary" dark class="pa-0 ma-0 white--text text-center" flat rounded="0">
+                    <v-img
+                        src="/images/biogrid_logo.png"
+                        contain
+                        position="center center"
+                        max-height="100"
+                        class="mr-12"
+                    />
                     <h1 class="accent--text">
                         Welcome to the Biological General Repository for Interaction Datasets
                     </h1>
-                    <div class="subtitle-1">
-                        BioGRID is an open access, interaction respository with data compiled through comprehensive literature curation efforts. All data are freely provided via our search index and available for download in standardized formats.
+                    <div class="subtitle-1 grey--text text--lighten-4">
+                        BioGRID is an open access, interaction database with data compiled through comprehensive literature curation efforts. All data are freely provided via our search index and available for download in standardized formats.
                     </div>
-                    <div style="min-height: 300px">
-                        SEARCH BOX
-                    </div>
+                    <v-row no-gutters class="mt-7 mb-7">
+                        <v-col
+                            lg="8"
+                            offset-lg="2"
+                        >
+                            <Search />
+                        </v-col>
+                    </v-row>
                     <v-row no-gutters>
                         <v-col
                             lg="10"
@@ -90,10 +102,12 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Linkout } from '@/utilities/interfaces'
 import HighlightCards from '@/components/content/HighlightCards.vue'
+import Search from '@/components/search/Search.vue'
 
 @Component({
     components: {
-        HighlightCards
+        HighlightCards,
+        Search
     }
 })
 export default class IndexPage extends Vue {

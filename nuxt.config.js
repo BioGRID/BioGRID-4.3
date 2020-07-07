@@ -31,7 +31,9 @@ export default {
     ** Global CSS
     */
     css: [
-        '~assets/globalstyle.scss'
+        '~assets/fonts/roboto.css',
+        '~assets/globalstyle.scss',
+        '@mdi/font/css/materialdesignicons.min.css'
     ],
     /*
     ** Plugins to load before mounting the App
@@ -77,6 +79,7 @@ export default {
     */
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
+        defaultAssets: false,
         theme: {
             dark: false,
             themes: {
