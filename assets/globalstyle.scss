@@ -12,4 +12,9 @@
 .page-enter, .page-leave-to {
     opacity: 0;
 }
-  
+
+::placeholder,
+::-webkit-input-placeholder,
+::-moz-placeholder {
+    opacity: 1;
+}
