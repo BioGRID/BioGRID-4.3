@@ -89,7 +89,7 @@ export default {
                     secondary: '#3E405B',
                     tertiary: '#FCD0A1',
                     info: '#BDADEA',
-                    warning: '#DE9E36',
+                    warning: '#EC9A29',
                     error: '#EF798A',
                     success: '#3E5622'
                 },

@@ -11,3 +11,8 @@ export interface Linkout {
     internal: boolean;
     target?: string;
 }
+
+export interface SelectOption {
+    value: string;
+    text: string;
+}
