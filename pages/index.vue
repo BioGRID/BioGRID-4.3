@@ -119,14 +119,14 @@ import Search from '@/components/search/Search.vue'
     }
 })
 export default class IndexPage extends Vue {
-        private highlightItems: Linkout[] = [
-            { to: '/test', text: 'Featured Datasets', title: 'BioGRID Featured Datasets', icon: 'mdi-star', internal: true },
-            { to: '/test', text: 'Curation Projects', title: 'BioGRID Curation Projects', icon: 'mdi-brain', internal: true },
-            { to: 'https://orcs.thebiogrid.org', text: 'BioGRID ORCS', title: 'BioGRID ORCS CRISPR Database', icon: 'mdi-dna', internal: false },
-            { to: '/test', text: 'YouTube Tutorials', title: 'BioGRID Youtube Tutorial Videos', icon: 'mdi-youtube', internal: true },
-            { to: '/test', text: 'Latest Updates', title: 'Follow @biogrid on Twitter', icon: 'mdi-twitter', internal: true },
-            { to: 'http://yahoo.com', text: 'Yahoo', title: 'Yahoo News', icon: 'mdi-yahoo', internal: false }
-        ]
+    private highlightItems: Linkout[] = [
+        { to: '/test', text: 'Featured Datasets', title: 'BioGRID Featured Datasets', icon: 'mdi-star', internal: true },
+        { to: '/test', text: 'Curation Projects', title: 'BioGRID Curation Projects', icon: 'mdi-brain', internal: true },
+        { to: 'https://orcs.thebiogrid.org', text: 'BioGRID ORCS', title: 'BioGRID ORCS CRISPR Database', icon: 'mdi-dna', internal: false },
+        { to: '/test', text: 'YouTube Tutorials', title: 'BioGRID Youtube Tutorial Videos', icon: 'mdi-youtube', internal: true },
+        { to: '/test', text: 'Latest Updates', title: 'Follow @biogrid on Twitter', icon: 'mdi-twitter', internal: true },
+        { to: 'http://yahoo.com', text: 'Yahoo', title: 'Yahoo News', icon: 'mdi-yahoo', internal: false }
+    ]
 }
 </script>
 
