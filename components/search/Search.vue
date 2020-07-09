@@ -104,13 +104,17 @@
                 cols="8"
                 offset="1"
             >
-                <v-select
-                    v-model="searchType"
+                <v-autocomplete
+                    v-model="selectedOrganisms"
                     solo
                     light
                     hide-details="auto"
+                    multiple
+                    deletable-chips
+                    chips
+                    small-chips
                     class="mt-1 searchTypeSelect"
-                    :items="searchOptions"
+                    :items="organismSelectOptions"
                 />
             </v-col>
         </v-row>
@@ -118,12 +122,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import { SelectOption } from '@/utilities/interfaces.ts'
+import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
+import { SelectOption, OrganismMap } from '@/utilities/interfaces.ts'
 
 @Component
 export default class Search extends Vue {
+    @State private organisms!: OrganismMap;
     private searchType: string = 'pg';
+    private selectedOrganisms: string[] = ['all'];
     private searchOptions: SelectOption[] = [
         { value: 'pg', text: 'Proteins & Genes' },
         { value: 'chem', text: 'Chemical Compounds' },
@@ -131,12 +137,64 @@ export default class Search extends Vue {
         { value: 'go', text: 'GO Terms' }
     ];
 
+    @Watch('selectedOrganisms')
+    onSelectedOrganismsChanged () {
+        if (this.selectedOrganisms.length <= 0) {
+            this.selectedOrganisms = ['all']
+        } else if (this.selectedOrganisms.length > 1) {
+            const index = this.selectedOrganisms.indexOf('all')
+            if (index !== -1) {
+                this.selectedOrganisms.splice(index, 1)
+            }
+        }
+    }
+
     private showOrganismSelect () {
         if (this.searchType === 'pg' || this.searchType === 'go') {
             return true
         }
 
         return false
+    }
+
+    private organismCompare (a: SelectOption, b: SelectOption) {
+        if (a.text === undefined || b.text === undefined) { return -1 }
+        if (a.text < b.text) { return -1 }
+        if (a.text > b.text) { return 1 }
+        return 0
+    }
+
+    get organismSelectOptions () {
+        const popularOptions: SelectOption[] = []
+        const options: SelectOption[] = []
+
+        for (const [organismID, organismInfo] of Object.entries(this.organisms)) {
+            if (organismInfo.deprecated === 0) {
+                let text = organismInfo.officialName
+                let chipText = organismInfo.abbreviation
+                if (organismInfo.strain !== undefined && organismInfo.strain !== '') {
+                    text += ' (' + organismInfo.strain + ')'
+                    chipText += ' (' + organismInfo.strain + ')'
+                }
+
+                if (organismInfo.commonName !== organismInfo.officialName) {
+                    text += ' [' + organismInfo.commonName + ']'
+                }
+
+                options.push({ value: organismID, text, chipText })
+                if (organismInfo.popular) {
+                    popularOptions.push({ value: organismID, text, chipText })
+                }
+            }
+        }
+
+        popularOptions.sort(this.organismCompare)
+        options.sort(this.organismCompare)
+
+        const allOrgs: SelectOption[] = [{ value: 'all', text: 'All Organisms', chipText: 'All Organisms' }, { header: 'Popular Organisms (Alphabetical)' }]
+        const allOptsHeader: SelectOption[] = [{ header: 'All Organisms (Alphabetical)' }]
+        const sortedOptions = allOrgs.concat(popularOptions, allOptsHeader, options)
+        return sortedOptions
     }
 }
 </script>

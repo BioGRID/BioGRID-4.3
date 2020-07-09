@@ -110,5 +110,11 @@ export default {
     ** See https://nuxtjs.org/api/configuration-build/
     */
     build: {
-    }
+    },
+
+    /**
+     ** Watch Configuration
+     ** Additional directories to watch for changes
+     */
+    watch: ['~utilities/*.ts']
 }
