@@ -90,11 +90,10 @@ export default class SearchPage extends Vue {
     private isPending: boolean = true;
 
     private created () {
-        if (this.isValidSearch()) {
+        if (!this.isValidSearch()) {
             this.loadOrganismList()
         } else {
-            this.$router.push({ path: '/error', params: { statusCode: '401', message: 'Banana Phone' } })
-            // return this.$nuxt.error({ statusCode: 401, message: 'Banana Phone' })
+            this.$nuxt.error({ statusCode: 404, message: 'The search parameters entered are invalid' })
         }
     }
 
