@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { Linkout } from '@/utilities/interfaces'
+import { Linkout } from '@/utilities/types'
 
 @Component
 export default class HighlightCards extends Vue {

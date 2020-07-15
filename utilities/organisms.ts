@@ -3,7 +3,7 @@
  * it could be fetched by the API, but it's not to save on network requests
  **/
 
-import { OrganismMap } from '@/utilities/interfaces.ts'
+import { OrganismMap } from '@/utilities/types'
 
 export const organismList: OrganismMap = {
     3055: {

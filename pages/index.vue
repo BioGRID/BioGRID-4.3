@@ -27,7 +27,7 @@
                             offset-md="1"
                             offset-sm="0"
                         >
-                            <Search />
+                            <SearchForm />
                         </v-col>
                     </v-row>
                     <v-row no-gutters>
@@ -108,14 +108,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Linkout } from '@/utilities/interfaces'
+import { Linkout } from '@/utilities/types'
 import HighlightCards from '@/components/content/HighlightCards.vue'
-import Search from '@/components/search/Search.vue'
+import SearchForm from '@/components/search/SearchForm.vue'
 
 @Component({
     components: {
         HighlightCards,
-        Search
+        SearchForm
     }
 })
 export default class IndexPage extends Vue {
