@@ -1,5 +1,5 @@
 <template>
-    <div class="biogrid-search align-center">
+    <div class="biogrid-search-form align-center">
         <v-row no-gutters>
             <v-col
                 lg="11"
@@ -24,6 +24,7 @@
                             cols="7"
                         >
                             <v-text-field
+                                v-model.trim="searchTerms"
                                 :autofocus="true"
                                 solo
                                 flat
@@ -31,6 +32,7 @@
                                 color="white"
                                 placeholder="What are you looking for?"
                                 hide-details="auto"
+                                @keyup.enter="submitSearch()"
                             />
                         </v-col>
                         <v-col
@@ -65,6 +67,7 @@
                     width="100%"
                     height="100%"
                     class="rounded-0 rounded-r-lg rounded-r-md rounded-r-sm"
+                    @click="submitSearch()"
                 >
                     <v-icon x-large>
                         mdi-chevron-double-right
@@ -118,24 +121,34 @@
                 />
             </v-col>
         </v-row>
+        <v-row v-if="showSearchFormAlert" no-gutters class="mt-3 pb-0">
+            <v-col>
+                <v-alert dense type="error" class="mb-n4 text-left">
+                    {{ searchFormAlertText }}
+                </v-alert>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
-import { SelectOption, OrganismMap } from '@/utilities/interfaces.ts'
+import { SelectOption, OrganismMap } from '@/utilities/types'
 
 @Component
-export default class Search extends Vue {
+export default class SearchForm extends Vue {
     @State private organisms!: OrganismMap;
+    @State private searchOptions!: SelectOption[];
+    private searchTerms: string = '';
     private searchType: string = 'pg';
     private selectedOrganisms: string[] = ['all'];
-    private searchOptions: SelectOption[] = [
-        { value: 'pg', text: 'Proteins & Genes' },
-        { value: 'chem', text: 'Chemical Compounds' },
-        { value: 'pub', text: 'Publications' },
-        { value: 'go', text: 'GO Terms' }
-    ];
+    private showSearchFormAlert: boolean = false;
+    private searchFormAlertText: string = '';
+
+    @Watch('searchType')
+    onSearchTypeChanged () {
+        this.showSearchFormAlert = false
+    }
 
     @Watch('selectedOrganisms')
     onSelectedOrganismsChanged () {
@@ -195,6 +208,32 @@ export default class Search extends Vue {
         const allOptsHeader: SelectOption[] = [{ header: 'All Organisms (Alphabetical)' }]
         const sortedOptions = allOrgs.concat(popularOptions, allOptsHeader, options)
         return sortedOptions
+    }
+
+    private submitSearch () {
+        this.showSearchFormAlert = false
+        // If we have an empty search box, show error
+        if (this.searchTerms === undefined || this.searchTerms === '') {
+            this.searchFormAlertText = 'You must enter at least one search term'
+            this.showSearchFormAlert = true
+        } else {
+            // Build up the query params
+            const queryParams: Record<string, string|string[]> = {
+                query: this.searchTerms,
+                type: this.searchType
+            }
+
+            // Only need organisms if we're doing protein/gene or go searches
+            if (this.searchType === 'pg' || this.searchType === 'go') {
+                // All is the same as an empty list of organisms
+                if (this.selectedOrganisms[0] !== 'all') {
+                    queryParams.organisms = this.selectedOrganisms
+                }
+            }
+
+            // Send to Search Page
+            this.$router.push({ path: '/search', query: queryParams })
+        }
     }
 }
 </script>

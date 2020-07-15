@@ -29,10 +29,10 @@
                 dark
                 large
                 nuxt
-                to="/test"
+                to="/search"
                 class="hidden-sm-and-down"
             >
-                Test
+                Search
             </v-btn>
             <v-btn
                 icon

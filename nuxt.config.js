@@ -90,7 +90,7 @@ export default {
                     tertiary: '#FCD0A1',
                     info: '#BDADEA',
                     warning: '#EC9A29',
-                    error: '#EF798A',
+                    error: '#901532',
                     success: '#3E5622'
                 },
                 dark: {

@@ -17,6 +17,7 @@ export interface SelectOption {
     text?: string;
     chipText?: string;
     header?: string;
+    longText?: string;
 }
 
 export interface OrganismEntry {
