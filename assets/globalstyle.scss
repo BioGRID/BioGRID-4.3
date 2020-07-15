@@ -18,3 +18,15 @@
 ::-moz-placeholder {
     opacity: 1;
 }
+
+main {
+    a, a:visited {
+        color: $linkColor !important;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $linkHoverColor !important;
+    }
+}
+
