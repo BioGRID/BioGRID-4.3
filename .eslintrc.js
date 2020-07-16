@@ -13,6 +13,7 @@ module.exports = {
   // add your custom rules here
   rules: {
       indent: 'off',
-      'vue/html-indent': 'off'
+      'vue/html-indent': 'off',
+      camelcase: 'off'
   }
 }

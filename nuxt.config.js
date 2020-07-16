@@ -88,6 +88,7 @@ export default {
                     accent: '#50C2BD',
                     secondary: '#3E405B',
                     tertiary: '#FCD0A1',
+                    quaternary: '#5c462c',
                     info: '#BDADEA',
                     warning: '#EC9A29',
                     error: '#901532',
@@ -116,5 +117,8 @@ export default {
      ** Watch Configuration
      ** Additional directories to watch for changes
      */
-    watch: ['~utilities/*.ts']
+    watch: [
+        '~utilities/*.ts',
+        '~models/*.ts'
+    ]
 }

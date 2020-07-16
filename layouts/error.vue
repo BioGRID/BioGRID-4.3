@@ -1,16 +1,33 @@
 <template>
     <v-container fill-height fluid class="nuxt-error">
         <v-row align="center" justify="center">
-            <v-col class="text-center">
-                <h1 v-if="error.statusCode === 404">
-                    {{ pageNotFound }}
-                </h1>
-                <h1 v-else>
-                    {{ otherError }}
-                </h1>
-                <NuxtLink to="/">
-                    Home page
-                </NuxtLink>
+            <v-col class="text-center mt-n12">
+                <div v-if="error.statusCode === 404">
+                    <v-img
+                        src="/images/404.png"
+                        height="400"
+                        contain
+                    />
+                </div>
+                <div v-else>
+                    <v-img
+                        src="/images/500.png"
+                        height="400"
+                        contain
+                    />
+                </div>
+                <h2>
+                    Sorry about that!
+                </h2>
+                <div class="subtitle-1">
+                    {{ extraMessage() }}
+                </div>
+                <h3>
+                    Navigate Back To
+                    <NuxtLink to="/">
+                        Home
+                    </NuxtLink>
+                </h3>
             </v-col>
         </v-row>
     </v-container>
@@ -23,7 +40,7 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 export default class NuxtError extends Vue {
     @Prop({ type: Object, default: null }) private error!: any
     private pageNotFound: string = '404 Not Found'
-    private otherError: string = 'An error occurred'
+    private otherError: string = '500 Internal Server Error'
     private layout: string = 'empty'
 
     private head () {
@@ -32,11 +49,18 @@ export default class NuxtError extends Vue {
             title
         }
     }
+
+    private extraMessage () {
+        if (this.error !== null && this.error !== undefined && this.error.message !== undefined && this.error.message.length > 0) {
+            if (!this.error.message.includes('statusCode')) {
+                return this.error.message
+            }
+        }
+
+        return ''
+    }
 }
 </script>
 
 <style scoped>
-h1 {
-  font-size: 20px;
-}
 </style>
