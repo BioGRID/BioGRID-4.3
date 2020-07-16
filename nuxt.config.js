@@ -117,5 +117,8 @@ export default {
      ** Watch Configuration
      ** Additional directories to watch for changes
      */
-    watch: ['~utilities/*.ts']
+    watch: [
+        '~utilities/*.ts',
+        '~models/*.ts'
+    ]
 }
