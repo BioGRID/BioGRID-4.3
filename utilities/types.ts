@@ -35,3 +35,11 @@ export interface OrganismEntry {
 export interface OrganismMap {
     [organismID: number]: OrganismEntry;
 }
+
+export interface SearchRequest {
+    search_terms: string;
+    search_type: string;
+    organisms?: number[];
+    from: number;
+    size: number;
+}
