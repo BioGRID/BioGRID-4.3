@@ -88,7 +88,7 @@
 <script lang="ts">
 import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
 import { SelectOption, OrganismMap, SearchRequest } from '@/utilities/types'
-import { API_SEARCH } from '@/models/search/pgroup'
+import { API_SEARCH } from '@/models/search/search'
 import SearchResultBox from '@/components/search/SearchResultBox.vue'
 
 @Component({
@@ -99,6 +99,7 @@ import SearchResultBox from '@/components/search/SearchResultBox.vue'
 export default class SearchPage extends Vue {
     @State private searchOptions!: SelectOption[];
     @State private organisms!: OrganismMap;
+    @State private preference!: string;
     private title: string = process.env.SHORT_TITLE || 'BioGRID';
     private organismList: string[] = [];
     private isPending: boolean = true;
@@ -142,7 +143,8 @@ export default class SearchPage extends Vue {
             search_terms: this.searchTerms,
             search_type: this.searchType,
             from: (this.page - 1) * this.size,
-            size: this.size
+            size: this.size,
+            preference: this.preference
         }
 
         if (req.search_type === 'pg' || req.search_type === 'go') {
