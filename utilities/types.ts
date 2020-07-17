@@ -43,3 +43,11 @@ export interface SearchRequest {
     from: number;
     size: number;
 }
+
+export interface SearchResultAction {
+    icon?: string;
+    color: string;
+    text: string;
+    count: number;
+    dark: boolean;
+}

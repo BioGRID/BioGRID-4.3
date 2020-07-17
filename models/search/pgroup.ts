@@ -16,6 +16,43 @@ export interface PGroupSearchResult {
     doc_score?: number;
 }
 
+export interface DatasetSearchResult {
+    dataset_id: number;
+    source_type: string;
+    source_id: string;
+    author_abbreviation: string;
+    authors?: string[];
+    collectives?: string[];
+    title: string;
+    abstract: string;
+    mesh_terms?: string[];
+    keywords?: string[];
+    journal: string;
+    journal_abbreviation: string;
+    volume?: string;
+    issue?: string;
+    pagination?: string;
+    doi?: string;
+    pmc_id?: string;
+    pub_date: string;
+    doc_score?: number;
+}
+
+export interface ChemicalSearchResult {
+    chemical_id: number;
+    source: string;
+    source_id: string;
+    synonyms?: string[];
+    description: string;
+    name: string;
+    chemical_type: string;
+    formula?: string;
+    inchi?: string;
+    inchikey?: string;
+    smile?: string;
+    dbxrefs?: Record<string, string[]>;
+}
+
 export interface PGroupSearchResultMap {
     [pgroup_id: number]: PGroupSearchResult;
 }

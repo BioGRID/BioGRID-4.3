@@ -2,7 +2,7 @@
     <v-container class="biogrid-search-page" fluid>
         <template v-if="!isPending">
             <v-card
-                class="pa-2"
+                class="pa-2 rounded-0 rounded-r-xl"
             >
                 <h1 class="font-weight-bold">
                     Search Results
@@ -11,16 +11,38 @@
                     </v-icon>
                 </h1>
                 <div class="ml-2">
-                    Your search for XXX returned
+                    Your search returned
+                    <span class="font-weight-bold red--text text--darken-3">{{ totalHits }}</span> total results.
+                    Currently showing results <span class="font-weight-bold red--text text--darken-3">{{ startRange }}</span>
+                    through <span class="font-weight-bold red--text text--darken-3">{{ endRange }}</span> below ...
                 </div>
                 <div class="ml-2 mt-3 pb-2">
                     <SearchChips :search-terms="searchTerms" :search-type="searchType" :organism-string="organismString" />
                 </div>
             </v-card>
+            <div v-if="searchResults.length <= 0">
+                <v-progress-circular
+                    :size="70"
+                    :width="7"
+                    color="accent"
+                    class="ma-2"
+                    indeterminate
+                />
+            </div>
             <SearchResultBox
                 v-for="(result,i) in searchResults"
                 :key="i"
+                :search-result="result"
+                :search-type="searchType"
             />
+            <div class="mt-2">
+                <v-pagination
+                    v-model="page"
+                    color="accent"
+                    :length="paginationSize"
+                    :total-visible="7"
+                />
+            </div>
         </template>
         <template v-if="isPending">
             <v-card
@@ -64,7 +86,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, State } from 'nuxt-property-decorator'
+import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
 import { SelectOption, OrganismMap, SearchRequest } from '@/utilities/types'
 import { API_SEARCH } from '@/models/search/pgroup'
 import SearchResultBox from '@/components/search/SearchResultBox.vue'
@@ -85,9 +107,9 @@ export default class SearchPage extends Vue {
     private organismIDs: number[] = []
     private organismString: string = '';
     private searchResults = []
-    private start: number = 0
-    private size: number = 50
-    private maxResults: number = 0;
+    private page: number = 1
+    private size: number = 15
+    private totalHits: number = 0;
 
     private created () {
         this.searchTerms = this.fetchProcessedSearchTerms()
@@ -101,11 +123,25 @@ export default class SearchPage extends Vue {
         }
     }
 
+    @Watch('page')
+    onPageChanged () {
+        this.executeSearch()
+    }
+
+    get paginationSize () {
+        let paginationSize = Math.floor(this.totalHits / this.size)
+        if ((this.totalHits % this.size) !== 0) {
+            paginationSize += 1
+        }
+        return paginationSize
+    }
+
     private async executeSearch () {
+        this.searchResults = []
         const req: SearchRequest = {
             search_terms: this.searchTerms,
             search_type: this.searchType,
-            from: this.start,
+            from: (this.page - 1) * this.size,
             size: this.size
         }
 
@@ -117,6 +153,7 @@ export default class SearchPage extends Vue {
 
         const results = await API_SEARCH(req)
         this.searchResults = results.data
+        this.totalHits = results.total_hits
         this.isPending = false
     }
 
@@ -156,8 +193,12 @@ export default class SearchPage extends Vue {
 
     private loadOrganismListAndIDs () {
         this.organismList = []
-        if (this.$route.query.organisms !== null && this.$route.query.organisms !== undefined && this.$route.query.organisms.length > 0) {
-            for (const organismID of this.$route.query.organisms) {
+        if (this.$route.query.organisms !== null && this.$route.query.organisms !== undefined) {
+            let organismSet = this.$route.query.organisms
+            if (!Array.isArray(organismSet)) {
+                organismSet = [organismSet]
+            }
+            for (const organismID of organismSet) {
                 if (organismID !== null && organismID !== undefined) {
                     const orgInfo = this.organisms[Number(organismID)]
                     if (orgInfo !== undefined) {
@@ -208,6 +249,20 @@ export default class SearchPage extends Vue {
         if (this.$route.query.query !== null) {
             return this.$route.query.query
         }
+    }
+
+    get startRange () {
+        const start: number = (this.page - 1) * this.size
+        return start + 1
+    }
+
+    get endRange () {
+        const end: number = (this.page) * this.size
+        if (end > this.totalHits) {
+            return this.totalHits
+        }
+
+        return end
     }
 }
 </script>
