@@ -6,12 +6,24 @@
             :to="searchResultLink"
         >
             <div v-if="searchResultType.length > 0" class="caption rounded-0 font-weight-bold pa-1 ma-0 mt-2 mb-2 pr-3 organismBanner rounded-r-xl grey lighten-2">
-                <span class="ml-4">
+                <span class="ml-3">
                     {{ searchResultType }}
                 </span>
             </div>
             <v-card-title class="pb-3 mt-0 pt-0 mb-1 font-weight-bold searchResultBoxTitle">
                 {{ searchResultTitle }}
+                <template v-if="searchType === 'chem' && formattedMolecularFormula.length > 0">
+                    (
+                    <span class="pb-0 pt-0 green--text text-darken-3 font-weight-bold">
+                        <span
+                            v-for="(component,i) in formattedMolecularFormula"
+                            :key="i"
+                        >
+                            <span v-if="component.type === 'element'">{{ component.value }}</span><span v-if="component.type === 'atom'"><sub>{{ component.value }}</sub></span>
+                        </span>
+                    </span>
+                    )
+                </template>
             </v-card-title>
             <v-card-subtitle class="pb-0 light-blue--text text-darken-3 font-weight-bold">
                 {{ searchResultSubtitle }}
@@ -57,6 +69,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { formatMolecularFormula } from '@/utilities/formatting'
 // import { PGroupSearchResult, DatasetSearchResult } from '@/models/search/pgroup'
 
 @Component
@@ -156,6 +169,10 @@ export default class SearchResultBox extends Vue {
         }
 
         return ''
+    }
+
+    get formattedMolecularFormula () {
+        return formatMolecularFormula(this.searchResult.formula)
     }
 
     private generatePGroupTitle () {
@@ -310,9 +327,6 @@ export default class SearchResultBox extends Vue {
 
     private generateChemicalFooter () {
         const footer: string[] = []
-        if (this.searchResult.formula !== undefined && this.searchResult.formula.length > 0) {
-            footer.push('Mol. Formula: ' + this.searchResult.formula)
-        }
 
         if (this.searchResult.inchikey !== undefined && this.searchResult.inchikey.length > 0) {
             footer.push('InChi Key: ' + this.searchResult.inchikey)
