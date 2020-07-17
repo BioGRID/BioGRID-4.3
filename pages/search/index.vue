@@ -29,12 +29,30 @@
                     indeterminate
                 />
             </div>
-            <SearchResultBox
-                v-for="(result,i) in searchResults"
-                :key="i"
-                :search-result="result"
-                :search-type="searchType"
-            />
+            <template v-if="searchType === 'chem'">
+                <ChemicalResult
+                    v-for="(result,i) in searchResults"
+                    :key="i"
+                    :search-result="result"
+                    :search-type="searchType"
+                />
+            </template>
+            <template v-if="searchType === 'pg'">
+                <PGroupResult
+                    v-for="(result,i) in searchResults"
+                    :key="i"
+                    :search-result="result"
+                    :search-type="searchType"
+                />
+            </template>
+            <template v-if="searchType === 'pub'">
+                <DatasetResult
+                    v-for="(result,i) in searchResults"
+                    :key="i"
+                    :search-result="result"
+                    :search-type="searchType"
+                />
+            </template>
             <div class="mt-2">
                 <v-pagination
                     v-model="page"
@@ -89,11 +107,13 @@
 import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
 import { SelectOption, OrganismMap, SearchRequest } from '@/utilities/types'
 import { API_SEARCH } from '@/models/search/search'
-import SearchResultBox from '@/components/search/SearchResultBox.vue'
+import ChemicalResult from '@/components/search/ChemicalResult.vue'
+import PGroupResult from '@/components/search/PGroupResult.vue'
 
 @Component({
     components: {
-        SearchResultBox
+        ChemicalResult,
+        PGroupResult
     }
 })
 export default class SearchPage extends Vue {

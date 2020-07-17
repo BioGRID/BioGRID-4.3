@@ -4,6 +4,8 @@
  * to properly display certain types of data
  **/
 
+import { OrganismEntry } from '@/utilities/types'
+
  /**
  * Take a molecular formula and format the numbers
  * correctly to look like an actual chemical formula
@@ -25,4 +27,17 @@ export function formatMolecularFormula (formula: string) {
         }
     }
     return formulaFormatted
+}
+
+/**
+ * Take an organism entry and create a properly formatted
+ * organism abbreviation with possible strain
+ */
+export function formatOrganismAbbreviation (organism: OrganismEntry) {
+    let organismAbbr = organism.abbreviation
+    if (organism.strain !== '') {
+        organismAbbr += ' (' + organism.strain + ')'
+    }
+
+    return organismAbbr
 }
