@@ -176,9 +176,14 @@ export default class SearchPage extends Vue {
         }
 
         const results = await API_SEARCH(req)
-        this.searchResults = results.data
-        this.totalHits = results.total_hits
-        this.isPending = false
+
+        if (results.returned_hits === undefined || results.returned_hits <= 0) {
+            this.$nuxt.$router.push('/help/search/noresults')
+        } else {
+            this.searchResults = results.data
+            this.totalHits = results.total_hits
+            this.isPending = false
+        }
     }
 
     private fetchProcessedSearchTerms () {
