@@ -167,6 +167,8 @@ export default class SearchPage extends Vue {
             preference: this.preference
         }
 
+        this.$store.dispatch('updateLastSearchType', { value: this.searchType })
+
         if (req.search_type === 'pg' || req.search_type === 'go') {
             if (this.organismIDs.length > 0) {
                 req.organisms = this.organismIDs

@@ -153,7 +153,6 @@ export default class SearchForm extends Vue {
     @Watch('searchType')
     onSearchTypeChanged () {
         this.showSearchFormAlert = false
-        this.$store.dispatch('updateLastSearchType', { value: this.searchType })
     }
 
     @Watch('selectedOrganisms')
