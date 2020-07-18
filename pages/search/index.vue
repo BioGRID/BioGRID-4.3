@@ -1,6 +1,11 @@
 <template>
     <v-container class="biogrid-search-page" fluid>
-        <template v-if="!isPending">
+        <template v-if="isError">
+            <v-alert type="error">
+                An error has occurred while attempting to perform your search request. This is hopefully just temporary, so please try your search again ... If the problem persists, please contact us at <a class="yellow--text" :href="'mailto:' + contactEmail" title="Contact Us By Email">{{ contactEmail }}</a>. We apologize for the inconvenience.
+            </v-alert>
+        </template>
+        <template v-if="!isPending && !isError">
             <v-card
                 class="pa-2 rounded-0 rounded-r-xl"
             >
@@ -29,12 +34,30 @@
                     indeterminate
                 />
             </div>
-            <SearchResultBox
-                v-for="(result,i) in searchResults"
-                :key="i"
-                :search-result="result"
-                :search-type="searchType"
-            />
+            <template v-if="searchType === 'chem'">
+                <ChemicalResult
+                    v-for="(result,i) in searchResults"
+                    :key="i"
+                    :search-result="result"
+                    :search-type="searchType"
+                />
+            </template>
+            <template v-if="searchType === 'pg'">
+                <PGroupResult
+                    v-for="(result,i) in searchResults"
+                    :key="i"
+                    :search-result="result"
+                    :search-type="searchType"
+                />
+            </template>
+            <template v-if="searchType === 'pub'">
+                <DatasetResult
+                    v-for="(result,i) in searchResults"
+                    :key="i"
+                    :search-result="result"
+                    :search-type="searchType"
+                />
+            </template>
             <div class="mt-2">
                 <v-pagination
                     v-model="page"
@@ -44,9 +67,9 @@
                 />
             </div>
         </template>
-        <template v-if="isPending">
+        <template v-if="isPending && !isError">
             <v-card
-                class="pa-3"
+                class="pa-2 rounded-0 rounded-r-xl"
             >
                 <v-row no-gutters>
                     <v-col
@@ -56,11 +79,14 @@
                         cols="9"
                     >
                         <h1 class="font-weight-bold">
+                            Searching {{ title }} Records ...
                             <v-icon x-large color="accent">
                                 mdi-magnify
                             </v-icon>
-                            Searching {{ title }} Records ...
                         </h1>
+                        <div class="ml-2">
+                            Please stand by while we search for optimal matches ...
+                        </div>
                         <div class="mt-2 ml-12">
                             <SearchChips :search-terms="searchTerms" :search-type="searchType" :organism-string="organismString" />
                         </div>
@@ -88,18 +114,21 @@
 <script lang="ts">
 import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
 import { SelectOption, OrganismMap, SearchRequest } from '@/utilities/types'
-import { API_SEARCH } from '@/models/search/pgroup'
-import SearchResultBox from '@/components/search/SearchResultBox.vue'
+import ChemicalResult from '@/components/search/ChemicalResult.vue'
+import PGroupResult from '@/components/search/PGroupResult.vue'
 
 @Component({
     components: {
-        SearchResultBox
+        ChemicalResult,
+        PGroupResult
     }
 })
 export default class SearchPage extends Vue {
     @State private searchOptions!: SelectOption[];
     @State private organisms!: OrganismMap;
+    @State private preference!: string;
     private title: string = process.env.SHORT_TITLE || 'BioGRID';
+    private contactEmail: string = process.env.CONTACT_EMAIL || 'BioGRID';
     private organismList: string[] = [];
     private isPending: boolean = true;
     private searchTerms: string = '';
@@ -110,6 +139,7 @@ export default class SearchPage extends Vue {
     private page: number = 1
     private size: number = 15
     private totalHits: number = 0;
+    private isError: boolean = false;
 
     private created () {
         this.searchTerms = this.fetchProcessedSearchTerms()
@@ -142,8 +172,11 @@ export default class SearchPage extends Vue {
             search_terms: this.searchTerms,
             search_type: this.searchType,
             from: (this.page - 1) * this.size,
-            size: this.size
+            size: this.size,
+            preference: this.preference
         }
+
+        this.$store.dispatch('updateLastSearchType', { value: this.searchType })
 
         if (req.search_type === 'pg' || req.search_type === 'go') {
             if (this.organismIDs.length > 0) {
@@ -151,10 +184,23 @@ export default class SearchPage extends Vue {
             }
         }
 
-        const results = await API_SEARCH(req)
-        this.searchResults = results.data
-        this.totalHits = results.total_hits
-        this.isPending = false
+        try {
+            const resp = await this.$pubapi.search(req)
+            if (resp.status !== 200) {
+                this.$nuxt.error({ statusCode: 500, message: resp.statusText })
+            } else {
+                const results = resp.data
+                if (results.returned_hits === undefined || results.returned_hits <= 0) {
+                    this.$nuxt.$router.push('/help/search/noresults')
+                } else {
+                    this.searchResults = results.data
+                    this.totalHits = results.total_hits
+                    this.isPending = false
+                }
+            }
+        } catch (error) {
+            this.isError = true
+        }
     }
 
     private fetchProcessedSearchTerms () {

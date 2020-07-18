@@ -40,6 +40,7 @@ export default {
     ** https://nuxtjs.org/guide/plugins
     */
     plugins: [
+        '~/plugins/apis'
     ],
     /*
     ** Auto import components
@@ -66,7 +67,9 @@ export default {
     ** Axios module configuration
     ** See https://axios.nuxtjs.org/options
     */
-    axios: {},
+    axios: {
+        retry: { retries: 5 }
+    },
     /*
     ** Style Resouces
     */
@@ -119,6 +122,6 @@ export default {
      */
     watch: [
         '~utilities/*.ts',
-        '~models/*.ts'
+        '~api/*.ts'
     ]
 }

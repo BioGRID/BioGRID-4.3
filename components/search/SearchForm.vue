@@ -139,11 +139,16 @@ import { SelectOption, OrganismMap } from '@/utilities/types'
 export default class SearchForm extends Vue {
     @State private organisms!: OrganismMap;
     @State private searchOptions!: SelectOption[];
+    @State private lastSearchType!: string;
     private searchTerms: string = '';
     private searchType: string = 'pg';
     private selectedOrganisms: string[] = ['all'];
     private showSearchFormAlert: boolean = false;
     private searchFormAlertText: string = '';
+
+    created () {
+        this.searchType = this.lastSearchType
+    }
 
     @Watch('searchType')
     onSearchTypeChanged () {

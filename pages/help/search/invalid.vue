@@ -3,7 +3,7 @@
         <v-card
             class="pa-3"
         >
-            <h1></h1>
+            <h1 />
         </v-card>
     </v-container>
 </template>

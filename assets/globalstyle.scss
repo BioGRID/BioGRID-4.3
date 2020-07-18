@@ -20,12 +20,12 @@
 }
 
 main {
-    a, a:visited {
+    a.plainLink, a.plainLink:visited {
         color: $linkColor !important;
         text-decoration: none;
     }
 
-    a:hover {
+    a.plainLink:hover {
         color: $linkHoverColor !important;
     }
 }

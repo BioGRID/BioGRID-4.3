@@ -3,6 +3,10 @@
  * re-used in different areas of the site for typescript verification
  **/
 
+ /**
+ * LINKOUT LISTS FOR BUILDING URLS
+ */
+
 export interface Linkout {
     to: string;
     text: string;
@@ -12,6 +16,10 @@ export interface Linkout {
     target?: string;
 }
 
+/**
+ * SELECT DROPDOWN OPTIONS
+ */
+
 export interface SelectOption {
     value?: string;
     text?: string;
@@ -19,6 +27,10 @@ export interface SelectOption {
     header?: string;
     longText?: string;
 }
+
+/**
+ * ORGANISM HANDLING TYPES
+ */
 
 export interface OrganismEntry {
     id: number;
@@ -36,12 +48,17 @@ export interface OrganismMap {
     [organismID: number]: OrganismEntry;
 }
 
+/**
+ * SEARCHING
+ */
+
 export interface SearchRequest {
     search_terms: string;
     search_type: string;
     organisms?: number[];
     from: number;
     size: number;
+    preference?: string;
 }
 
 export interface SearchResultAction {
@@ -50,4 +67,60 @@ export interface SearchResultAction {
     text: string;
     count: number;
     dark: boolean;
+}
+
+/**
+ *  HANDLING OF SEARCH RESULTS
+ */
+
+export interface PGroupSearchResult {
+    pgroup_id: number;
+    pgroup_type: string;
+    source: string;
+    source_id: string;
+    official_symbol?: string[];
+    orf?: string[];
+    ordered_locus?: string[];
+    synonyms?: string[];
+    organism: OrganismEntry;
+    description: string;
+    dbxrefs?: Record<string, string[]>;
+    doc_score?: number;
+}
+
+export interface DatasetSearchResult {
+    dataset_id: number;
+    source_type: string;
+    source_id: string;
+    author_abbreviation: string;
+    authors?: string[];
+    collectives?: string[];
+    title: string;
+    abstract: string;
+    mesh_terms?: string[];
+    keywords?: string[];
+    journal: string;
+    journal_abbreviation: string;
+    volume?: string;
+    issue?: string;
+    pagination?: string;
+    doi?: string;
+    pmc_id?: string;
+    pub_date: string;
+    doc_score?: number;
+}
+
+export interface ChemicalSearchResult {
+    chemical_id: number;
+    source: string;
+    source_id: string;
+    synonyms?: string[];
+    description: string;
+    name: string;
+    chemical_type: string;
+    formula?: string;
+    inchi?: string;
+    inchikey?: string;
+    smile?: string;
+    dbxrefs?: Record<string, string[]>;
 }
