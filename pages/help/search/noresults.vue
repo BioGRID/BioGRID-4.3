@@ -22,7 +22,9 @@
                 dark
                 to="/"
             >
-                <v-icon>mdi-arrow-left-circle</v-icon>
+                <v-icon class="mr-1">
+                    mdi-arrow-left-circle
+                </v-icon>
                 Back to Search
             </v-btn>
             <v-divider class="mt-5 mb-5" />
