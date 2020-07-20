@@ -9,7 +9,7 @@
             :result-footer="resultFooter"
             :stats="stats"
         >
-            <template slot="resultTitleAddon">
+            <template slot="customResultTitle">
                 <template v-if="formattedMolecularFormula.length > 0">
                     (
                     <span class="pb-0 pt-0 green--text text-darken-3 font-weight-bold">
