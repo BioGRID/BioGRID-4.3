@@ -185,7 +185,7 @@ export default class SearchPage extends Vue {
         }
 
         try {
-            const resp = await this.$pubapi.search(req)
+            const resp = await this.$pubapi.participants(req)
             if (resp.status !== 200) {
                 this.$nuxt.error({ statusCode: 500, message: resp.statusText })
             } else {
