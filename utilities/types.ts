@@ -49,7 +49,7 @@ export interface OrganismMap {
 }
 
 /**
- * SEARCHING
+ * API ACCESS
  */
 
 export interface SearchRequest {
@@ -67,6 +67,11 @@ export interface SearchResultAction {
     text: string;
     count: number;
     dark: boolean;
+}
+
+export interface ParticipantRequest {
+    participantType: string;
+    participantID: number;
 }
 
 /**

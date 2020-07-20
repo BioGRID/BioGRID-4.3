@@ -4,7 +4,7 @@
  * in the entire site
  */
 
-import { SearchRequest } from '@/utilities/types'
+import { SearchRequest, ParticipantRequest } from '@/utilities/types'
 
 export default class PublicAPI {
     private $axios: any
@@ -17,8 +17,14 @@ export default class PublicAPI {
         this.$axios = $axios
     }
 
-    public search (payload: SearchRequest) {
-        return this.$axios.post(this.apiURL + '/search', payload, {
+    public participants (payload: SearchRequest) {
+        return this.$axios.post(this.apiURL + '/participants', payload, {
+            headers: { Authorization: 'Bearer ' + this.apiKey }
+        })
+    }
+
+    public participant (payload: ParticipantRequest) {
+        return this.$axios.get(this.apiURL + '/participant/' + payload.participantType + '/' + payload.participantID, {
             headers: { Authorization: 'Bearer ' + this.apiKey }
         })
     }

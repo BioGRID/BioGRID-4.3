@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",
+    "@ava/typescript": "^1.1.1",
     "@mdi/font": "^5.3.45",
     "@nuxt/typescript-build": "^1.0.3",
     "@nuxtjs/dotenv": "^1.4.1",
