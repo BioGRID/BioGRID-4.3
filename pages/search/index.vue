@@ -42,7 +42,7 @@
                     :search-type="searchType"
                 />
             </template>
-            <template v-if="searchType === 'pg'">
+            <template v-if="searchType === 'pg' || searchType === 'go'">
                 <PGroupResult
                     v-for="(result,i) in searchResults"
                     :key="i"

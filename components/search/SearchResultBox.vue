@@ -12,7 +12,7 @@
             </div>
             <v-card-title class="pb-3 mt-0 pt-0 mb-1 font-weight-bold searchResultBoxTitle">
                 {{ resultTitle }}
-                <slot name="resultTitleAddon" />
+                <slot name="customResultTitle" />
             </v-card-title>
             <v-card-subtitle class="pb-0 light-blue--text text-darken-3 font-weight-bold">
                 {{ resultSubtitle }}
@@ -30,15 +30,17 @@
                         <span v-if="!readMoreActivated">[More]</span>
                     </v-btn>
                 </a>
+                <slot name="customResultBody" />
             </v-card-text>
             <div class="caption ml-4 grey--text">
                 {{ resultFooter }}
             </div>
-            <v-card-actions class="ml-1">
+            <v-divider class="mt-1 mb-n1 mr-4 ml-4" />
+            <div class="pt-3 pl-3 pr-3 pb-2">
                 <SearchResultActions
                     :stats="stats"
                 />
-            </v-card-actions>
+            </div>
         </v-card>
     </div>
 </template>

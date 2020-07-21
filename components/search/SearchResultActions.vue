@@ -1,21 +1,28 @@
 <template>
     <div class="biogrid-search-result-actions align-center">
-        <v-btn
-            v-for="(action, i) in actions"
-            :key="i"
-            x-small
-            :color="action.color"
-            :dark="action.dark"
-            depressed
-            class="font-weight-bold mr-1"
+        <v-slide-group
+            show-arrows
         >
-            <v-icon
-                x-small
+            <v-slide-item
+                v-for="(action, i) in actions"
+                :key="i"
             >
-                {{ action.icon }}
-            </v-icon>
-            {{ action.text }} ({{ action.count }})
-        </v-btn>
+                <v-btn
+                    x-small
+                    :color="action.color"
+                    :dark="action.dark"
+                    depressed
+                    class="font-weight-bold mr-1"
+                >
+                    <v-icon
+                        x-small
+                    >
+                        {{ action.icon }}
+                    </v-icon>
+                    {{ action.text }} ({{ action.count }})
+                </v-btn>
+            </v-slide-item>
+        </v-slide-group>
     </div>
 </template>
 

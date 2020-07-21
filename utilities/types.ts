@@ -14,6 +14,7 @@ export interface Linkout {
     icon?: string;
     internal: boolean;
     target?: string;
+    prefix?: string;
 }
 
 /**
