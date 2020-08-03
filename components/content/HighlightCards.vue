@@ -69,6 +69,6 @@ export default class HighlightCards extends Vue {
 
 <style lang="scss" scoped>
     .highlightCard {
-        background-color: rgb(255,255,255,0.15) !important;
+        background-color: rgb(255,255,255,0.30) !important;
     }
 </style>
