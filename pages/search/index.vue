@@ -1,114 +1,117 @@
 <template>
-    <v-container class="biogrid-search-page" fluid>
-        <template v-if="isError">
-            <v-alert type="error">
-                An error has occurred while attempting to perform your search request. This is hopefully just temporary, so please try your search again ... If the problem persists, please contact us at <a class="yellow--text" :href="'mailto:' + contactEmail" title="Contact Us By Email">{{ contactEmail }}</a>. We apologize for the inconvenience.
-            </v-alert>
-        </template>
-        <template v-if="!isPending && !isError">
-            <v-card
-                class="pa-2 rounded-0 rounded-r-xl"
-            >
-                <h1 class="font-weight-bold">
-                    Search Results
-                    <v-icon x-large color="accent">
-                        mdi-magnify
-                    </v-icon>
-                </h1>
-                <div class="ml-2">
-                    Your search returned
-                    <span class="font-weight-bold red--text text--darken-3">{{ totalHits }}</span> total results.
-                    Currently showing results <span class="font-weight-bold red--text text--darken-3">{{ startRange }}</span>
-                    through <span class="font-weight-bold red--text text--darken-3">{{ endRange }}</span> below ...
+    <div class="biogrid-search-page">
+        <AlertBar />
+        <v-container fluid>
+            <template v-if="isError">
+                <v-alert type="error">
+                    An error has occurred while attempting to perform your search request. This is hopefully just temporary, so please try your search again ... If the problem persists, please contact us at <a class="yellow--text" :href="'mailto:' + contactEmail" title="Contact Us By Email">{{ contactEmail }}</a>. We apologize for the inconvenience.
+                </v-alert>
+            </template>
+            <template v-if="!isPending && !isError">
+                <v-card
+                    class="pa-2 rounded-0 rounded-r-xl"
+                >
+                    <h1 class="font-weight-bold">
+                        Search Results
+                        <v-icon x-large color="accent">
+                            mdi-magnify
+                        </v-icon>
+                    </h1>
+                    <div class="ml-2">
+                        Your search returned
+                        <span class="font-weight-bold red--text text--darken-3">{{ totalHits }}</span> total results.
+                        Currently showing results <span class="font-weight-bold red--text text--darken-3">{{ startRange }}</span>
+                        through <span class="font-weight-bold red--text text--darken-3">{{ endRange }}</span> below ...
+                    </div>
+                    <div class="ml-2 mt-3 pb-2">
+                        <SearchChips :search-terms="searchTerms" :search-type="searchType" :organism-string="organismString" />
+                    </div>
+                </v-card>
+                <div v-if="searchResults.length <= 0">
+                    <v-progress-circular
+                        :size="70"
+                        :width="7"
+                        color="accent"
+                        class="ma-2"
+                        indeterminate
+                    />
                 </div>
-                <div class="ml-2 mt-3 pb-2">
-                    <SearchChips :search-terms="searchTerms" :search-type="searchType" :organism-string="organismString" />
+                <template v-if="searchType === 'chem'">
+                    <ChemicalResult
+                        v-for="(result,i) in searchResults"
+                        :key="i"
+                        :search-result="result"
+                        :search-type="searchType"
+                    />
+                </template>
+                <template v-if="searchType === 'pg' || searchType === 'go'">
+                    <PGroupResult
+                        v-for="(result,i) in searchResults"
+                        :key="i"
+                        :search-result="result"
+                        :search-type="searchType"
+                    />
+                </template>
+                <template v-if="searchType === 'pub'">
+                    <DatasetResult
+                        v-for="(result,i) in searchResults"
+                        :key="i"
+                        :search-result="result"
+                        :search-type="searchType"
+                    />
+                </template>
+                <div class="mt-2">
+                    <v-pagination
+                        v-model="page"
+                        color="accent"
+                        :length="paginationSize"
+                        :total-visible="7"
+                    />
                 </div>
-            </v-card>
-            <div v-if="searchResults.length <= 0">
-                <v-progress-circular
-                    :size="70"
-                    :width="7"
-                    color="accent"
-                    class="ma-2"
-                    indeterminate
-                />
-            </div>
-            <template v-if="searchType === 'chem'">
-                <ChemicalResult
-                    v-for="(result,i) in searchResults"
-                    :key="i"
-                    :search-result="result"
-                    :search-type="searchType"
-                />
             </template>
-            <template v-if="searchType === 'pg' || searchType === 'go'">
-                <PGroupResult
-                    v-for="(result,i) in searchResults"
-                    :key="i"
-                    :search-result="result"
-                    :search-type="searchType"
-                />
+            <template v-if="isPending && !isError">
+                <v-card
+                    class="pa-2 rounded-0 rounded-r-xl"
+                >
+                    <v-row no-gutters>
+                        <v-col
+                            lg="11"
+                            md="11"
+                            sm="9"
+                            cols="9"
+                        >
+                            <h1 class="font-weight-bold">
+                                Searching {{ title }} Records ...
+                                <v-icon x-large color="accent">
+                                    mdi-magnify
+                                </v-icon>
+                            </h1>
+                            <div class="ml-2">
+                                Please stand by while we search for optimal matches ...
+                            </div>
+                            <div class="mt-2 ml-12">
+                                <SearchChips :search-terms="searchTerms" :search-type="searchType" :organism-string="organismString" />
+                            </div>
+                        </v-col>
+                        <v-col
+                            lg="1"
+                            md="1"
+                            sm="3"
+                            cols="3"
+                        >
+                            <v-progress-circular
+                                :size="70"
+                                :width="7"
+                                color="accent"
+                                class="float-right ma-2"
+                                indeterminate
+                            />
+                        </v-col>
+                    </v-row>
+                </v-card>
             </template>
-            <template v-if="searchType === 'pub'">
-                <DatasetResult
-                    v-for="(result,i) in searchResults"
-                    :key="i"
-                    :search-result="result"
-                    :search-type="searchType"
-                />
-            </template>
-            <div class="mt-2">
-                <v-pagination
-                    v-model="page"
-                    color="accent"
-                    :length="paginationSize"
-                    :total-visible="7"
-                />
-            </div>
-        </template>
-        <template v-if="isPending && !isError">
-            <v-card
-                class="pa-2 rounded-0 rounded-r-xl"
-            >
-                <v-row no-gutters>
-                    <v-col
-                        lg="11"
-                        md="11"
-                        sm="9"
-                        cols="9"
-                    >
-                        <h1 class="font-weight-bold">
-                            Searching {{ title }} Records ...
-                            <v-icon x-large color="accent">
-                                mdi-magnify
-                            </v-icon>
-                        </h1>
-                        <div class="ml-2">
-                            Please stand by while we search for optimal matches ...
-                        </div>
-                        <div class="mt-2 ml-12">
-                            <SearchChips :search-terms="searchTerms" :search-type="searchType" :organism-string="organismString" />
-                        </div>
-                    </v-col>
-                    <v-col
-                        lg="1"
-                        md="1"
-                        sm="3"
-                        cols="3"
-                    >
-                        <v-progress-circular
-                            :size="70"
-                            :width="7"
-                            color="accent"
-                            class="float-right ma-2"
-                            indeterminate
-                        />
-                    </v-col>
-                </v-row>
-            </v-card>
-        </template>
-    </v-container>
+        </v-container>
+    </div>
 </template>
 
 <script lang="ts">
@@ -116,11 +119,13 @@ import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
 import { SelectOption, OrganismMap, SearchRequest } from '@/utilities/types'
 import ChemicalResult from '@/components/search/ChemicalResult.vue'
 import PGroupResult from '@/components/search/PGroupResult.vue'
+import AlertBar from '@/components/content/AlertBar.vue'
 
 @Component({
     components: {
         ChemicalResult,
-        PGroupResult
+        PGroupResult,
+        AlertBar
     }
 })
 export default class SearchPage extends Vue {

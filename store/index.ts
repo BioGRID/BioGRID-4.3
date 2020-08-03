@@ -11,5 +11,9 @@ export const state = () => ({
         { value: 'go', text: 'GO Terms', longText: 'Proteins & Genes by GO Terms' }
     ],
     preference: uuidv4(),
-    lastSearchType: 'pg'
+    lastSearchType: 'pg',
+    showAlertBar: true,
+    showAlertHome: true,
+    alertBarColor: 'primary',
+    alertBarClass: 'white--text'
 })

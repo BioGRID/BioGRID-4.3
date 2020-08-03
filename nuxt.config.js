@@ -85,6 +85,9 @@ export default {
         defaultAssets: false,
         theme: {
             dark: false,
+            options: {
+                customProperties: true
+            },
             themes: {
                 light: {
                     primary: '#1B4079',

@@ -44,16 +44,46 @@
             </v-container>
         </v-sheet>
 
-        <v-container class="constrainSize">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et commodo purus. Vestibulum condimentum cursus quam gravida vestibulum. Ut ut lacus accumsan, porta ante in, sodales felis. Vivamus pellentesque faucibus risus vel gravida. Quisque non risus tellus. Vestibulum auctor justo ut libero mollis dignissim. Morbi vitae nunc tortor. Pellentesque sagittis arcu vitae orci varius fringilla. Nam elementum nisi scelerisque porttitor vehicula.</p>
+        <AlertBar />
 
-            <p>Proin vitae tellus feugiat, pellentesque ex eu, porta orci. Donec nec enim accumsan, lacinia ligula nec, varius dolor. Sed vitae interdum urna, eget dapibus lacus. Ut vehicula ante vitae suscipit ultrices. Etiam nec arcu justo. Nam bibendum non tortor sit amet interdum. Ut quis mauris id orci auctor sollicitudin. Nulla pretium fermentum eros, eu gravida nulla rhoncus at. Nullam sollicitudin porta turpis, at viverra eros lacinia volutpat. Nunc ut lectus quis velit malesuada finibus. Sed sem magna, fermentum in condimentum vel, vestibulum vitae dui. Quisque venenatis mauris nec malesuada aliquam. Nam molestie dolor ac urna malesuada, sit amet convallis ante fringilla.</p>
-
-            <p>Aenean sit amet tortor malesuada, placerat ligula id, imperdiet ligula. Duis mollis leo at lacinia convallis. Etiam molestie, ligula tincidunt suscipit efficitur, ipsum mi volutpat ex, id sollicitudin metus urna nec magna. Praesent sit amet dignissim dui. Donec ex ex, laoreet sed imperdiet id, vehicula a ante. Mauris elementum luctus dolor, vitae pulvinar sem lacinia vel. Vivamus nec tincidunt sem. Suspendisse pellentesque ut enim vitae viverra. Quisque ultricies, ex nec pretium tincidunt, quam nibh vulputate lacus, quis fermentum ipsum risus eu urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi gravida luctus sem in facilisis. Nulla egestas massa posuere, consequat mi vitae, vehicula est. Suspendisse rhoncus ullamcorper efficitur. Curabitur commodo odio enim, in tempor metus pulvinar sit amet. Integer efficitur tortor tellus, feugiat laoreet felis egestas eu.</p>
+        <v-container class="pa-0 constrainSize text-center">
+            <h2 class="mt-3 mb-n3 font-weight-regular text-uppercase">
+                Our Partners
+            </h2>
+            <SubheaderUnderline
+                top-margin="5"
+                bot-margin="0"
+                width="120px"
+            />
+            <v-row>
+                <template
+                    v-for="(partner,i) in partners"
+                >
+                    <v-col
+                        :key="i"
+                        lg="2"
+                        md="2"
+                        cols="4"
+                    >
+                        <v-card
+                            flat
+                            class="pt-6 pl-6 pr-6 pb-3"
+                            :href="partner.to"
+                            target="_BLANK"
+                            color="#EEE"
+                        >
+                            <v-img
+                                :src="partner.image"
+                                :title="partner.title"
+                            />
+                        </v-card>
+                    </v-col>
+                </template>
+            </v-row>
         </v-container>
 
         <v-sheet color="grey lighten-2">
-            <v-container class="constrainSize">
+            <v-container class="pa-0 pt-4 pb-2 constrainSize">
                 <p>Integer congue rutrum lacinia. Nam mollis ex sit amet ante suscipit mollis. Morbi malesuada lorem non nisl pretium tincidunt. Sed elementum augue non erat sagittis, sed scelerisque arcu venenatis. Donec fermentum commodo lectus, sed dignissim enim tempus at. In est libero, mollis non scelerisque et, egestas eget est. Fusce euismod metus et sapien hendrerit, at sollicitudin mauris ullamcorper. Aenean cursus pulvinar nulla in gravida.</p>
 
                 <p>Mauris sit amet nulla viverra, fermentum quam vitae, ornare sapien. Ut tempor, purus at aliquam luctus, diam libero pulvinar enim, eget congue ex lacus posuere neque. Pellentesque mollis rhoncus ullamcorper. Aliquam tellus felis, vestibulum ut gravida non, tincidunt ac sapien. Aenean molestie ex et ligula dictum sagittis. Nullam ullamcorper commodo turpis vitae facilisis. Suspendisse potenti. Cras maximus vel mi in porttitor. Praesent gravida tincidunt fermentum. Sed auctor nulla sed lacus eleifend consequat. Proin lacinia nisl ac porttitor gravida.</p>
@@ -62,7 +92,7 @@
             </v-container>
         </v-sheet>
 
-        <v-container class="constrainSize">
+        <v-container class="pa-0 constrainSize">
             <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur vel gravida leo. Nam ornare metus in risus dapibus, nec bibendum nunc dictum. Nulla interdum commodo enim, quis tempus ipsum placerat sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pretium hendrerit nulla, accumsan luctus lectus tempor id. Duis luctus nulla et metus porttitor, sed egestas turpis tempor. Morbi augue neque, eleifend at pharetra non, hendrerit a tortor. Curabitur vitae euismod dui. Sed ultricies ipsum quis neque vestibulum pellentesque. Nullam at justo lorem.</p>
 
             <p>Sed tempor est diam, suscipit placerat purus bibendum non. Integer a felis interdum, imperdiet nisl at, maximus justo. Curabitur ac tortor porta, porta nibh sed, suscipit mi. Nam at ipsum eget orci elementum consequat ut a turpis. Mauris pellentesque vulputate turpis, vel posuere ipsum maximus ut. Donec nec vestibulum odio. Phasellus sit amet risus enim. Maecenas porta nisi aliquet neque ultricies, vitae vehicula lacus consequat. Proin sed augue sit amet tortor efficitur congue. Nam fermentum lorem dolor, sit amet imperdiet arcu laoreet id. Duis et nibh gravida, porttitor elit non, dictum dui. Phasellus pellentesque lectus nec pretium luctus.</p>
@@ -71,7 +101,7 @@
         </v-container>
 
         <v-sheet color="grey lighten-2">
-            <v-container class="constrainSize">
+            <v-container class="pa-0 pt-4 pb-2 constrainSize">
                 <p>Duis lobortis augue eget est malesuada porttitor. Nam semper dui felis, ut dictum justo mollis et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non felis imperdiet, scelerisque mi quis, luctus lacus. Nulla facilisi. In hac habitasse platea dictumst. Fusce pellentesque augue dolor, ut bibendum nulla condimentum non. Nullam ullamcorper gravida sapien, nec sodales ex dictum quis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
 
                 <p>Donec mattis augue sed bibendum dignissim. Integer libero neque, euismod vel urna et, condimentum placerat nisi. Ut ornare pretium interdum. Phasellus ac arcu et est lobortis venenatis ut vitae ex. Phasellus malesuada erat ligula, vehicula ultrices elit dignissim non. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum nulla justo, varius non erat ut, pellentesque eleifend lorem. Etiam vitae sollicitudin mi. Vestibulum porta, nibh ac convallis mollis, orci tortor pretium lectus, quis cursus lacus sapien a nulla. Curabitur ut feugiat purus, sed convallis justo. In rutrum commodo dolor non consequat. Nullam consequat dolor quis mauris laoreet, eget luctus augue semper. Nam interdum eu lectus eu condimentum.</p>
@@ -80,7 +110,7 @@
             </v-container>
         </v-sheet>
 
-        <v-container class="constrainSize">
+        <v-container class="pa-0 constrainSize">
             <p>Nullam posuere sagittis odio in luctus. Donec sollicitudin, tellus in luctus porta, sapien erat iaculis nulla, ultricies scelerisque nisl arcu id lacus. Phasellus sed ex non libero commodo molestie eget sed enim. Nulla facilisi. Fusce at dolor ex. Mauris tellus mi, gravida eget nulla eu, maximus facilisis urna. Phasellus imperdiet efficitur dui quis posuere. Nulla porta dignissim lacinia. Pellentesque hendrerit varius felis at sollicitudin.</p>
 
             <p>Curabitur eu quam sit amet metus dictum pulvinar non nec massa. Integer viverra velit orci, sed aliquet tellus ultricies id. Morbi sed placerat arcu, ut hendrerit arcu. Mauris tempor lacinia est, id gravida quam vulputate rutrum. Sed sit amet neque ac mi pellentesque tincidunt quis et magna. Curabitur eget dapibus ipsum, id ornare risus. Donec sit amet massa lobortis, posuere lorem eget, consectetur massa. Aenean eleifend, massa accumsan mattis ultricies, nisl risus venenatis massa, at interdum nisi massa quis sem. Maecenas vulputate sit amet magna eu aliquam. Aliquam efficitur orci sed tortor rutrum dictum. Fusce consectetur enim at tempor pharetra. Mauris ultricies nibh tempus purus ultrices finibus. Fusce tempus turpis eu orci volutpat aliquam.</p>
@@ -89,14 +119,14 @@
         </v-container>
 
         <v-sheet color="grey lighten-2">
-            <v-container class="constrainSize">
+            <v-container class="pa-0 pt-4 pb-2 constrainSize">
                 <p>Nullam tortor est, convallis ac augue a, viverra dignissim est. Aenean pulvinar dictum lacus et blandit. Sed mattis, leo at varius dictum, nibh purus varius leo, non hendrerit magna dui id orci. Sed quis lectus purus. Etiam consectetur dapibus justo a tincidunt. Donec placerat convallis porta. Donec in sagittis nisi, eu fermentum eros. Sed maximus volutpat dolor non consequat. Suspendisse lobortis eu sapien non dapibus. Praesent elementum tortor arcu, in tempor eros luctus eu. Phasellus convallis vitae dui nec scelerisque. Sed eget tincidunt leo, sed dapibus neque. Pellentesque eget porttitor libero. Integer sapien tortor, finibus cursus ex vitae, hendrerit pharetra ligula. Nullam vitae consequat mi.</p>
 
                 <p>Integer et felis quis diam placerat efficitur. Aliquam ac eros elementum, molestie lacus at, hendrerit lectus. Fusce id nisl dictum mi bibendum tincidunt. Phasellus vel tellus et lectus tincidunt ultrices. Nam non odio hendrerit ante volutpat auctor id sit amet metus. Cras vel nulla erat. Donec tincidunt pellentesque leo a maximus. In hac habitasse platea dictumst. Suspendisse efficitur malesuada vestibulum. Vivamus posuere varius sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;</p>
             </v-container>
         </v-sheet>
 
-        <v-container class="constrainSize">
+        <v-container class="pa-0 pt-4 constrainSize">
             <p>In tristique, est porta lobortis pharetra, magna leo sagittis elit, a faucibus justo nisi at velit. Duis interdum erat eu mauris laoreet volutpat. Integer tortor velit, dictum vel ligula sit amet, ultrices placerat mi. Etiam in fermentum enim. Aenean in ullamcorper nisi. Quisque ligula libero, consequat in finibus cursus, lobortis at nisi. Integer ut libero eu tellus vehicula posuere a vel nunc.</p>
 
             <p>Etiam facilisis sodales justo ac ullamcorper. Quisque ut lectus sit amet lacus ornare euismod eget at nisl. Phasellus quam elit, bibendum ac erat aliquet, sodales dignissim mi. Sed vitae urna vel urna ultricies posuere at auctor tellus. Aenean in lacus urna. Etiam efficitur urna non eros accumsan, eget suscipit lacus convallis. Nulla vel lobortis purus, a ornare magna.</p>
@@ -111,11 +141,15 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { Linkout } from '@/utilities/types'
 import HighlightCards from '@/components/content/HighlightCards.vue'
 import SearchForm from '@/components/search/SearchForm.vue'
+import AlertBar from '@/components/content/AlertBar.vue'
+import SubheaderUnderline from '@/components/content/SubheaderUnderline.vue'
 
 @Component({
     components: {
         HighlightCards,
-        SearchForm
+        SearchForm,
+        AlertBar,
+        SubheaderUnderline
     }
 })
 export default class IndexPage extends Vue {
@@ -126,6 +160,15 @@ export default class IndexPage extends Vue {
         { to: '/test', text: 'YouTube Tutorials', title: 'BioGRID Youtube Tutorial Videos', icon: 'mdi-youtube', internal: true },
         { to: '/test', text: 'Latest Updates', title: 'Follow @biogrid on Twitter', icon: 'mdi-twitter', internal: true },
         { to: 'http://yahoo.com', text: 'Yahoo', title: 'Yahoo News', icon: 'mdi-yahoo', internal: false }
+    ]
+
+    private partners: Linkout[] = [
+         { to: 'https://www.nih.gov/', text: 'National Institutes of Health', title: 'National Instatitues of Health', internal: false, image: 'images/partners/nih.png' },
+         { to: 'https://orip.nih.gov/', text: 'Office of Research and Infrastructure Programs', title: 'Office of Research and Infrastructure Programs', internal: false, image: 'images/partners/ORIP.png' },
+        { to: 'http://www.cihr-irsc.gc.ca/e/193.html', text: 'Canadian Institutes of Health Research', title: 'Canadian Institutes of Health Research', internal: false, image: 'images/partners/cihr.png' },
+        { to: 'https://www.mountsinai.on.ca/', text: 'Mount Sinai Hospital', title: 'Mount Sinai Hospital', internal: false, image: 'images/partners/mountsinai.png' },
+        { to: 'https://www.princeton.edu/', text: 'Princeton University', title: 'Princeton University', internal: false, image: 'images/partners/princeton.png' },
+        { to: 'https://www.umontreal.ca/en/', text: 'Universite de Montreal', title: 'Universite de Montreal', internal: false, image: 'images/partners/montreal.png' }
     ]
 }
 </script>
