@@ -7,6 +7,8 @@
             app
             class="white--text"
             :elevate-on-scroll="true"
+            :src="backgroundImage()"
+            :fade-img-on-scroll="true"
         >
             <v-app-bar-nav-icon
                 color="white"
@@ -58,5 +60,19 @@ export default class TheFooter extends Vue {
     private toggleNavDrawerVisible () {
         this.$store.dispatch('toggleNavDrawerVisible')
     }
+
+    private backgroundImage () {
+        if (this.$route.path === '/' || this.$route.path === '/home') {
+            return 'images/banner_bg_appbar.png'
+        } else {
+            return ''
+        }
+    }
 }
 </script>
+
+<style lang="scss" scoped>
+     ::v-deep .v-toolbar__image .v-image__image--cover {
+        background-size: auto !important;
+    }
+</style>

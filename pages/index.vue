@@ -1,8 +1,8 @@
 <template>
     <v-container fluid class="index-page pa-0">
-        <v-sheet color="secondary">
+        <v-sheet class="bannerBackground">
             <v-container class="pa-0 constrainSize">
-                <v-card color="secondary" dark class="pa-0 ma-0 white--text text-center" flat rounded="0">
+                <v-card color="transparent" dark class="pa-0 ma-0 white--text text-center" flat rounded="0">
                     <v-img
                         src="/images/biogrid_logo.png"
                         contain
@@ -133,5 +133,12 @@ export default class IndexPage extends Vue {
 <style lang="scss" scoped>
     .constrainSize {
         max-width: 1190px;
+    }
+
+    .bannerBackground {
+        background-image: url( '~@/assets/images/banner_bg.png' ), linear-gradient(#3E405B, #000);
+        background-size: auto;
+        background-repeat: no-repeat;
+        background-position: top center;
     }
 </style>
