@@ -131,3 +131,12 @@ export interface ChemicalSearchResult {
     smile?: string;
     dbxrefs?: Record<string, string[]>;
 }
+
+export interface NewsItem {
+    news_id: number;
+    title: string;
+    body: string;
+    added_date: string;
+    image: string;
+    user_id: number;
+}
