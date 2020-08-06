@@ -4,14 +4,14 @@
             <v-col class="text-center mt-n12">
                 <div v-if="error.statusCode === 404">
                     <v-img
-                        src="/images/404.png"
+                        :src="notFoundImage"
                         height="400"
                         contain
                     />
                 </div>
                 <div v-else>
                     <v-img
-                        src="/images/500.png"
+                        :src="serverErrorImage"
                         height="400"
                         contain
                     />
@@ -48,6 +48,14 @@ export default class NuxtError extends Vue {
         return {
             title
         }
+    }
+
+    get notFoundImage () {
+        return process.env.BASE_URL + '/images/404.png'
+    }
+
+    get serverErrorImage () {
+        return process.env.BASE_URL + '/images/500.png'
     }
 
     private extraMessage () {

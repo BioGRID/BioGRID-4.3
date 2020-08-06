@@ -4,7 +4,7 @@
             <v-container class="pa-0 constrainSize">
                 <v-card color="transparent" dark class="pa-0 ma-0 white--text text-center" flat rounded="0">
                     <v-img
-                        src="/images/biogrid_logo.png"
+                        :src="logoImage"
                         contain
                         position="center center"
                         max-height="100"
@@ -36,6 +36,7 @@
                             md="10"
                             offset-lg="1"
                             offset-md="1"
+                            class="mb-2"
                         >
                             <HighlightCards :items="highlightItems" />
                         </v-col>
@@ -179,6 +180,16 @@ export default class IndexPage extends Vue {
         { to: 'https://www.princeton.edu/', text: 'Princeton University', title: 'Princeton University', internal: false, image: 'images/partners/princeton.png' },
         { to: 'https://www.umontreal.ca/en/', text: 'Universite de Montreal', title: 'Universite de Montreal', internal: false, image: 'images/partners/montreal.png' }
     ]
+
+    private head () {
+        return {
+            title: process.env.FULL_TITLE
+        }
+    }
+
+    get logoImage () {
+        return process.env.BASE_URL + '/images/biogrid_logo.png'
+    }
 
     private async asyncData (context: any) {
         const maxNewsItems = 6

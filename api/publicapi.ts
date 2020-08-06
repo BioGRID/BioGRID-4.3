@@ -35,4 +35,10 @@ export default class PublicAPI {
             params
         })
     }
+
+    public newsitem (newsID: number) {
+        return this.$axios.get(this.apiURL + '/newsitem/' + newsID, {
+            headers: { Authorization: 'Bearer ' + this.apiKey }
+        })
+    }
 }

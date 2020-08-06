@@ -70,6 +70,15 @@ import AlertBar from '@/components/content/AlertBar.vue'
 export default class PublicationResulttwoPage extends Vue {
     private pubInfo: DatasetSearchResult | undefined = undefined
 
+    private head () {
+        if (this.pubInfo !== undefined) {
+            return {
+                title: this.pubInfo.title
+            }
+        }
+        return {}
+    }
+
     private async asyncData (context: any) {
         /* const resp = await context.$pubapi.participant({ participantType: 'dataset', participantID: context.route.params.id })
         console.log(resp.data) */

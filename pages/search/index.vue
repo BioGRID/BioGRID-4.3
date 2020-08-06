@@ -146,6 +146,12 @@ export default class SearchPage extends Vue {
     private totalHits: number = 0;
     private isError: boolean = false;
 
+    private head () {
+        return {
+            title: this.title + ' Search Results'
+        }
+    }
+
     private created () {
         this.searchTerms = this.fetchProcessedSearchTerms()
         this.searchType = this.fetchProcessedSearchType()

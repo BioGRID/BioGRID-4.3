@@ -23,6 +23,8 @@
               <v-btn
                 block
                 color="primary"
+                nuxt
+                :to="summaryLink"
               >
                 <v-icon>mdi-chevron-down</v-icon>
                 Read More
@@ -42,6 +44,14 @@ export default class NewsSummary extends Vue {
     @Prop() private newsItem!: NewsItem;
     @Prop() private maxBodyLength!: number;
 
+    get summaryLink () {
+        if (this.newsItem !== undefined) {
+            return '/news/' + this.newsItem.news_id
+        }
+
+        return ''
+    }
+
     get summaryTitle () {
         if (this.newsItem !== undefined) {
             return this.newsItem.title
@@ -52,7 +62,7 @@ export default class NewsSummary extends Vue {
 
     get summaryImage () {
         if (this.newsItem !== undefined) {
-            return 'images/news/' + this.newsItem.image
+            return process.env.BASE_URL + '/images/news/' + this.newsItem.image
         }
 
         return ''
@@ -66,7 +76,10 @@ export default class NewsSummary extends Vue {
             } else if (this.newsItem.title.length <= 60) {
                 bodyExtension = 75
             }
-            return this.newsItem.body.slice(0, this.maxBodyLength + bodyExtension) + ' ...'
+
+            // Strip HTML tags from summary body
+            const body = this.newsItem.body.replace(/(<([^>]+)>)/ig, '')
+            return body.slice(0, this.maxBodyLength + bodyExtension) + ' ...'
         }
 
         return ''
@@ -75,7 +88,6 @@ export default class NewsSummary extends Vue {
     get summaryDetails () {
         if (this.newsItem !== undefined) {
             const date = moment(this.newsItem.added_date, moment.ISO_8601)
-            console.log(date)
             return date.format('MMMM Do, YYYY - hh:mm a')
         }
 

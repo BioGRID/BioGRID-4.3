@@ -4,7 +4,7 @@
             class="pa-3"
         >
             <v-img
-                src="/images/sad_bulldog.jpg"
+                :src="rightImage"
                 height="350"
                 width="350"
                 class="float-right ml-5 hidden-sm-and-down"
@@ -125,7 +125,17 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class SearchNoResultsHelpPage extends Vue {}
+export default class SearchNoResultsHelpPage extends Vue {
+    private head () {
+        return {
+            title: 'No Search Results Found'
+        }
+    }
+
+    get rightImage () {
+        return process.env.BASE_URL + '/images/sad_bulldog.jpg'
+    }
+}
 </script>
 
 <style lang="scss" scoped>
