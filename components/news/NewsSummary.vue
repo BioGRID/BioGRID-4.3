@@ -1,8 +1,12 @@
 <template>
-    <div class="biogrid-news-summary">
-        <v-card>
+    <div class="biogrid-news-summary flex d-flex flex-column">
+        <v-card
+            flat
+            class="d-flex flex-column flex"
+        >
             <v-img
                 :src="summaryImage"
+                max-height="200"
             />
             <v-card-title>
                 {{ summaryTitle }}
@@ -10,7 +14,7 @@
             <v-card-subtitle>
                 {{ summaryDetails }}
             </v-card-subtitle>
-            <v-card-text>
+            <v-card-text class="flex">
                 {{ summaryBody }}
             </v-card-text>
             <v-card-actions>
@@ -56,7 +60,13 @@ export default class NewsSummary extends Vue {
 
     get summaryBody () {
         if (this.newsItem !== undefined) {
-            return this.newsItem.body.slice(0, this.maxBodyLength) + ' ...'
+            let bodyExtension: number = 0
+            if (this.newsItem.title.length <= 40) {
+                bodyExtension = 100
+            } else if (this.newsItem.title.length <= 60) {
+                bodyExtension = 75
+            }
+            return this.newsItem.body.slice(0, this.maxBodyLength + bodyExtension) + ' ...'
         }
 
         return ''

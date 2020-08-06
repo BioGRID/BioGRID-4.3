@@ -4,7 +4,14 @@
             <template
                 v-for="(item,i) in newsItems"
             >
-                <v-col :key="i" cols="12" lg="4" md="4" sm="6">
+                <v-col
+                    :key="i"
+                    class="d-flex flex-column"
+                    cols="12"
+                    lg="4"
+                    md="4"
+                    sm="6"
+                >
                     <NewsSummary :news-item="item" :max-body-length="maxBodyLength" />
                 </v-col>
             </template>
