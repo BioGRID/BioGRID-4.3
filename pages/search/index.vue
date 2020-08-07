@@ -203,6 +203,11 @@ export default class SearchPage extends Vue {
                 const results = resp.data
                 if (results.returned_hits === undefined || results.returned_hits <= 0) {
                     this.$nuxt.$router.push('/help/search/noresults')
+                } else if (results.returned_hits === 1 && this.page === 1) {
+                    // If we only have one result
+                    // just redirect to it, instead of showing search results
+                    const singleResult = results.data[0]
+                    this.$nuxt.$router.push(this.buildSingleResultLink(singleResult))
                 } else {
                     this.searchResults = results.data
                     this.totalHits = results.total_hits
@@ -212,6 +217,18 @@ export default class SearchPage extends Vue {
         } catch (error) {
             this.isError = true
         }
+    }
+
+    private buildSingleResultLink (singleResult: any) {
+        if (this.searchType === 'chem') {
+            return '/chemical/' + String(singleResult.chemical_id)
+        } else if (this.searchType === 'pub') {
+            return '/publication/' + String(singleResult.dataset_id)
+        } else if (this.searchType === 'pg' || this.searchType === 'go') {
+            return '/protein/' + String(singleResult.pgroup_id)
+        }
+
+        return ''
     }
 
     private fetchProcessedSearchTerms () {
