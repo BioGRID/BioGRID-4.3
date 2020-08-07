@@ -9,7 +9,7 @@
                     Latest News Articles
                 </h1>
                 <div class="subtitle-1">
-                    Showing articles {{ ((page - 1) * maxNewsItems) + 1 }} to {{ ((page - 1) * maxNewsItems) + newsItems.length }} of {{ totalNewsItems }} news articles ...
+                    Showing articles {{ startArticleNumber }} to {{ startArticleNumber + newsItems.length }} of {{ totalNewsItems }} news articles ...
                 </div>
 
                 <v-list three-line>
@@ -97,6 +97,10 @@ export default class NewsArticle extends Vue {
         }
 
         return 0
+    }
+
+    get startArticleNumber () {
+        return ((this.page - 1) * this.maxNewsItems) + 1
     }
 
     private generateNewsItemLink (item: NewsItem) {

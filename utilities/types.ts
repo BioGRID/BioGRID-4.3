@@ -111,6 +111,7 @@ export interface DatasetSearchResult {
     volume?: string;
     issue?: string;
     pagination?: string;
+    affiliations?: string[];
     doi?: string;
     pmc_id?: string;
     pub_date: string;
