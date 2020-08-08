@@ -24,10 +24,8 @@ export default class AlertBar extends Vue {
 
     private showAlert () {
         if (this.$route.path === '/' || this.$route.path === '/home') {
-            console.log('here')
             return this.showAlertHome
         } else {
-            console.log('here2')
             return this.showAlertBar
         }
     }

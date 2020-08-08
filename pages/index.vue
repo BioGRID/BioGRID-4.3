@@ -4,7 +4,7 @@
             <v-container class="pa-0 constrainSize">
                 <v-card color="transparent" dark class="pa-0 ma-0 white--text text-center" flat rounded="0">
                     <v-img
-                        src="/images/biogrid_logo.png"
+                        :src="logoImage"
                         contain
                         position="center center"
                         max-height="100"
@@ -36,6 +36,7 @@
                             md="10"
                             offset-lg="1"
                             offset-md="1"
+                            class="mb-2"
                         >
                             <HighlightCards :items="highlightItems" />
                         </v-col>
@@ -46,49 +47,53 @@
 
         <AlertBar />
 
-        <v-container class="pa-0 constrainSize text-center">
-            <h2 class="mt-3 mb-n3 font-weight-regular text-uppercase">
-                Our Partners
+        <v-container class="pa-0 constrainSize">
+            <h2 class="mt-3 mb-n3 font-weight-regular text-uppercase text-center">
+                Latest News
             </h2>
             <SubheaderUnderline
                 top-margin="5"
-                bot-margin="0"
+                bot-margin="2"
                 width="120px"
             />
-            <v-row>
-                <template
-                    v-for="(partner,i) in partners"
-                >
-                    <v-col
-                        :key="i"
-                        lg="2"
-                        md="2"
-                        cols="4"
-                    >
-                        <v-card
-                            flat
-                            class="pt-6 pl-6 pr-6 pb-3"
-                            :href="partner.to"
-                            target="_BLANK"
-                            color="#EEE"
-                        >
-                            <v-img
-                                :src="partner.image"
-                                :title="partner.title"
-                            />
-                        </v-card>
-                    </v-col>
-                </template>
-            </v-row>
+            <NewsSummaryBlock :news-items="newsItems" :max-body-length="maxNewsBodyLength" />
         </v-container>
 
         <v-sheet color="grey lighten-2">
-            <v-container class="pa-0 pt-4 pb-2 constrainSize">
-                <p>Integer congue rutrum lacinia. Nam mollis ex sit amet ante suscipit mollis. Morbi malesuada lorem non nisl pretium tincidunt. Sed elementum augue non erat sagittis, sed scelerisque arcu venenatis. Donec fermentum commodo lectus, sed dignissim enim tempus at. In est libero, mollis non scelerisque et, egestas eget est. Fusce euismod metus et sapien hendrerit, at sollicitudin mauris ullamcorper. Aenean cursus pulvinar nulla in gravida.</p>
-
-                <p>Mauris sit amet nulla viverra, fermentum quam vitae, ornare sapien. Ut tempor, purus at aliquam luctus, diam libero pulvinar enim, eget congue ex lacus posuere neque. Pellentesque mollis rhoncus ullamcorper. Aliquam tellus felis, vestibulum ut gravida non, tincidunt ac sapien. Aenean molestie ex et ligula dictum sagittis. Nullam ullamcorper commodo turpis vitae facilisis. Suspendisse potenti. Cras maximus vel mi in porttitor. Praesent gravida tincidunt fermentum. Sed auctor nulla sed lacus eleifend consequat. Proin lacinia nisl ac porttitor gravida.</p>
-
-                <p>Integer quis gravida lorem. Vestibulum rhoncus libero nec fermentum interdum. Nam turpis nulla, viverra vel massa at, blandit condimentum tellus. Aenean elit tortor, tempor in turpis et, gravida elementum quam. Cras pulvinar, ante nec tempus porttitor, libero risus semper purus, non mollis ante risus euismod eros. Morbi in venenatis nisl, quis luctus arcu. Fusce blandit tortor id finibus euismod. Aliquam pharetra magna ac ipsum molestie, in ullamcorper magna posuere. Etiam finibus facilisis justo sed tempus. Aenean rutrum scelerisque sem non lobortis. Ut magna eros, venenatis eu ex id, venenatis ullamcorper est. Mauris a est metus. Aliquam sem orci, vestibulum tincidunt nibh a, gravida malesuada dui.</p>
+            <v-container class="pa-0 pt-4 pb-2 constrainSize text-center">
+                <h2 class="mt-3 mb-n3 font-weight-regular text-uppercase">
+                    Our Partners
+                </h2>
+                <SubheaderUnderline
+                    top-margin="5"
+                    bot-margin="0"
+                    width="120px"
+                />
+                <v-row>
+                    <template
+                        v-for="(partner,i) in partners"
+                    >
+                        <v-col
+                            :key="i"
+                            lg="2"
+                            md="2"
+                            cols="4"
+                        >
+                            <v-card
+                                flat
+                                class="pt-6 pl-6 pr-6 pb-3"
+                                :href="partner.to"
+                                target="_BLANK"
+                                color="grey lighten-2"
+                            >
+                                <v-img
+                                    :src="partner.image"
+                                    :title="partner.title"
+                                />
+                            </v-card>
+                        </v-col>
+                    </template>
+                </v-row>
             </v-container>
         </v-sheet>
 
@@ -138,21 +143,26 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Linkout } from '@/utilities/types'
+import { Linkout, NewsItem } from '@/utilities/types'
 import HighlightCards from '@/components/content/HighlightCards.vue'
 import SearchForm from '@/components/search/SearchForm.vue'
 import AlertBar from '@/components/content/AlertBar.vue'
 import SubheaderUnderline from '@/components/content/SubheaderUnderline.vue'
+import NewsSummaryBlock from '@/components/news/NewsSummaryBlock.vue'
 
 @Component({
     components: {
         HighlightCards,
         SearchForm,
         AlertBar,
-        SubheaderUnderline
+        SubheaderUnderline,
+        NewsSummaryBlock
     }
 })
 export default class IndexPage extends Vue {
+    private newsItems: NewsItem[] = []
+    private maxNewsItems!: number // Set in Async Data
+    private maxNewsBodyLength: number = 300;
     private highlightItems: Linkout[] = [
         { to: '/test', text: 'Featured Datasets', title: 'BioGRID Featured Datasets', icon: 'mdi-star', internal: true },
         { to: '/test', text: 'Curation Projects', title: 'BioGRID Curation Projects', icon: 'mdi-brain', internal: true },
@@ -170,6 +180,26 @@ export default class IndexPage extends Vue {
         { to: 'https://www.princeton.edu/', text: 'Princeton University', title: 'Princeton University', internal: false, image: 'images/partners/princeton.png' },
         { to: 'https://www.umontreal.ca/en/', text: 'Universite de Montreal', title: 'Universite de Montreal', internal: false, image: 'images/partners/montreal.png' }
     ]
+
+    private head () {
+        return {
+            title: process.env.FULL_TITLE
+        }
+    }
+
+    get logoImage () {
+        return process.env.BASE_URL + '/images/biogrid_logo.png'
+    }
+
+    private async asyncData (context: any) {
+        const maxNewsItems = 6
+        try {
+            const news = await context.$pubapi.newsitems({ count: maxNewsItems })
+            return { newsItems: news.data.data, maxNewsItems }
+        } catch (error) {
+            return { newsItems: undefined, maxNewsItems }
+        }
+    }
 }
 </script>
 

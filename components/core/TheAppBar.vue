@@ -18,7 +18,7 @@
             <v-toolbar-title class="pl-0">
                 <nuxt-link to="/">
                     <v-img
-                        src="/images/biogrid_logo.png"
+                        :src="logoImage()"
                         max-height="60"
                         contain
                         position="left center"
@@ -63,10 +63,14 @@ export default class TheFooter extends Vue {
 
     private backgroundImage () {
         if (this.$route.path === '/' || this.$route.path === '/home') {
-            return 'images/banner_bg_appbar.png'
+            return process.env.BASE_URL + '/images/banner_bg_appbar.png'
         } else {
             return ''
         }
+    }
+
+    private logoImage () {
+        return process.env.BASE_URL + '/images/biogrid_logo.png'
     }
 }
 </script>

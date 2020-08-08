@@ -111,6 +111,7 @@ export interface DatasetSearchResult {
     volume?: string;
     issue?: string;
     pagination?: string;
+    affiliations?: string[];
     doi?: string;
     pmc_id?: string;
     pub_date: string;
@@ -130,4 +131,13 @@ export interface ChemicalSearchResult {
     inchikey?: string;
     smile?: string;
     dbxrefs?: Record<string, string[]>;
+}
+
+export interface NewsItem {
+    news_id: number;
+    title: string;
+    body: string;
+    added_date: string;
+    image: string;
+    user_id: number;
 }

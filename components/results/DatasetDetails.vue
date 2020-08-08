@@ -48,14 +48,26 @@
                     <v-btn
                         depressed
                         x-small
-                        color="grey lighten-3"
+                        color="primary"
                         class="mt-2"
+                        @click="showAffiliations = !showAffiliations"
                     >
-                        Show Affiliations
+                        {{ showAffiliations ? 'Hide' : 'Show' }} Affiliations
                         <v-icon small>
-                            mdi-plus
+                            {{ showAffiliations ? 'mdi-minus' : 'mdi-plus' }}
                         </v-icon>
                     </v-btn>
+                    <div v-if="datasetAffiliations.length > 0 && showAffiliations && !datasetCollapsed" class="mb-3 mt-3">
+                        <v-sheet
+                            v-for="(affiliation,i) in datasetAffiliations"
+                            :key="i"
+                            dark
+                            color="primary"
+                            class="pa-3 mt-1 body-2"
+                        >
+                            {{ affiliation }}
+                        </v-sheet>
+                    </div>
                 </div>
                 <p v-if="dataset.abstract.length > 0 && !datasetCollapsed" class="body-1 mb-2">
                     <v-sheet
@@ -95,23 +107,44 @@
                         <v-btn
                             depressed
                             x-small
-                            color="grey lighten-3"
+                            color="quaternary lighten-5"
+                            @click="showKeywords = !showKeywords"
                         >
-                            Show Keywords
-                            <v-icon small>mdi-plus</v-icon>
+                            {{ showKeywords ? 'Hide' : 'Show' }} Keywords
+                            <v-icon small>
+                                {{ showKeywords ? 'mdi-minus' : 'mdi-plus' }}
+                            </v-icon>
                         </v-btn>
                     </span>
-
                     <span v-if="meshTerms.length > 0 && !datasetCollapsed" class="subtitle-2 font-weight-medium mb-0">
                         <v-btn
                             depressed
                             x-small
-                            color="grey lighten-3"
+                            color="tertiary lighten-1"
+                            @click="showMeshTerms = !showMeshTerms"
                         >
-                            Show Mesh Terms
-                            <v-icon small>mdi-plus</v-icon>
+                            {{ showMeshTerms ? 'Hide' : 'Show' }} Mesh Terms
+                            <v-icon small>
+                                {{ showMeshTerms ? 'mdi-minus' : 'mdi-plus' }}
+                            </v-icon>
                         </v-btn>
                     </span>
+                    <div v-if="showKeywords && !datasetCollapsed" class="mb-3 mt-3">
+                        <v-sheet
+                            color="quaternary lighten-5"
+                            class="pa-3 mt-1 body-2 text-lowercase"
+                        >
+                            {{ keywords }}
+                        </v-sheet>
+                    </div>
+                    <div v-if="showMeshTerms && !datasetCollapsed" class="mb-3 mt-3">
+                        <v-sheet
+                            color="tertiary lighten-1"
+                            class="pa-3 mt-1 body-2 text-lowercase"
+                        >
+                            {{ meshTerms }}
+                        </v-sheet>
+                    </div>
                 </div>
             </template>
         </v-card>
@@ -124,13 +157,16 @@ import { Linkout, DatasetSearchResult } from '@/utilities/types'
 
 @Component
 export default class DatasetDetails extends Vue {
-    @Prop() private dataset!: DatasetSearchResult;
-    @Prop({ type: String, default: '' }) private color!: string;
-    @Prop({ type: Boolean, default: false }) private dark!: boolean;
-    @Prop({ type: Boolean, default: false }) private collapsed!: boolean;
-    private datasetCollapsed: boolean = false;
+    @Prop() private dataset!: DatasetSearchResult
+    @Prop({ type: String, default: '' }) private color!: string
+    @Prop({ type: Boolean, default: false }) private dark!: boolean
+    @Prop({ type: Boolean, default: false }) private collapsed!: boolean
+    private datasetCollapsed: boolean = false
     private readMoreActivated: boolean = false
-    private maxAbstractLength: number = 400;
+    private maxAbstractLength: number = 400
+    private showAffiliations: boolean = false
+    private showKeywords: boolean = false
+    private showMeshTerms: boolean = false
 
     private created () {
         this.datasetCollapsed = this.collapsed
@@ -234,6 +270,13 @@ export default class DatasetDetails extends Vue {
         }
 
         return pubLinks
+    }
+
+    get datasetAffiliations () {
+        if (this.dataset.affiliations !== undefined && this.dataset.affiliations.length > 0) {
+            return this.dataset.affiliations
+        }
+        return []
     }
 
     private toggleDatasetCollapsed () {
