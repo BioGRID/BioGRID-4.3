@@ -54,13 +54,27 @@ export interface OrganismMap {
  * API ACCESS
  */
 
+export enum SearchTypeOptions {
+    PG = 'pg',
+    PUB = 'pub',
+    CHEM = 'chem',
+    GO = 'go'
+}
+
+export enum EntitiesOptions {
+    ALL = 'all',
+    WITH = 'with',
+    WITHOUT = 'without'
+}
+
 export interface SearchRequest {
     search_terms: string;
-    search_type: string;
+    search_type: SearchTypeOptions;
     organisms?: number[];
     from: number;
     size: number;
     preference?: string;
+    entities: EntitiesOptions;
 }
 
 export interface SearchResultAction {
@@ -92,6 +106,7 @@ export interface PGroupSearchResult {
     organism: OrganismEntry;
     description: string;
     dbxrefs?: Record<string, string[]>;
+    stats?: Record<string, Record<string, number>>
     doc_score?: number;
 }
 
@@ -115,6 +130,7 @@ export interface DatasetSearchResult {
     doi?: string;
     pmc_id?: string;
     pub_date: string;
+    stats?: Record<string, Record<string, number>>
     doc_score?: number;
 }
 
@@ -130,6 +146,7 @@ export interface ChemicalSearchResult {
     inchi?: string;
     inchikey?: string;
     smile?: string;
+    stats?: Record<string, Record<string, number>>
     dbxrefs?: Record<string, string[]>;
 }
 

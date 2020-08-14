@@ -67,12 +67,11 @@ export default class ChemicalResult extends Vue {
     }
 
     get stats () {
-        return {
-            interactions: 33,
-            complexes: 18,
-            ptms: 84,
-            chemicals: 41
+        if (this.searchResult.stats !== undefined) {
+            return this.searchResult.stats
         }
+
+        return {}
     }
 
     get resultLink () {

@@ -8,14 +8,14 @@
                 :key="i"
             >
                 <v-btn
-                    x-small
+                    small
                     :color="action.color"
                     :dark="action.dark"
                     depressed
                     class="font-weight-bold mr-1"
                 >
                     <v-icon
-                        x-small
+                        small
                     >
                         {{ action.icon }}
                     </v-icon>
@@ -32,46 +32,46 @@ import { SearchResultAction } from '@/utilities/types'
 
 @Component
 export default class SearchResultActions extends Vue {
-    @Prop({ type: Object, default: undefined }) private stats!: Record<string, number>
+    @Prop({ type: Object, default: undefined }) private stats!: Record<string, Record<string, number>>
 
     get actions () {
         const actions: SearchResultAction[] = []
 
-        if (this.stats.interactions !== undefined) {
+        if (this.stats.activated['1'] !== undefined) {
             actions.push({
                 icon: 'mdi-graph',
                 text: 'interactions',
-                count: 33,
+                count: this.stats.activated['1'],
                 color: 'yellow lighten-3',
                 dark: false
             })
         }
 
-        if (this.stats.complexes !== undefined) {
+        if (this.stats.activated['2'] !== undefined) {
             actions.push({
                 icon: 'mdi-cube-unfolded',
                 text: 'complexes',
-                count: 16,
+                count: this.stats.activated['2'],
                 color: 'purple lighten-4',
                 dark: false
             })
         }
 
-        if (this.stats.ptms !== undefined) {
+        if (this.stats.activated['4'] !== undefined) {
             actions.push({
                 icon: 'mdi-map-marker',
                 text: 'post-translational modifications',
-                count: 117,
+                count: this.stats.activated['4'],
                 color: 'orange lighten-3',
                 dark: false
             })
         }
 
-        if (this.stats.chemicals !== undefined) {
+        if (this.stats.activated['3'] !== undefined) {
             actions.push({
                 icon: 'mdi-flask-outline',
                 text: 'chemical interactions',
-                count: 81,
+                count: this.stats.activated['3'],
                 color: 'green lighten-3',
                 dark: false
             })
