@@ -69,7 +69,7 @@
                         </v-sheet>
                     </div>
                 </div>
-                <p v-if="dataset.abstract.length > 0 && !datasetCollapsed" class="body-1 mb-2">
+                <div v-if="dataset.abstract.length > 0 && !datasetCollapsed" class="body-1 mb-2">
                     <v-sheet
                         color="grey lighten-3"
                         class="pa-3"
@@ -100,7 +100,7 @@
                             </v-btn>
                         </div>
                     </v-sheet>
-                </p>
+                </div>
 
                 <div>
                     <span v-if="keywords.length > 0 && !datasetCollapsed" class="subtitle-2 font-weight-medium mb-0">

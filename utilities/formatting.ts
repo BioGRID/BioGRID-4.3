@@ -4,7 +4,7 @@
  * to properly display certain types of data
  **/
 
-import { OrganismEntry } from '@/utilities/types'
+import { OrganismEntry, SearchResultAction } from '@/utilities/types'
 
  /**
  * Take a molecular formula and format the numbers
@@ -40,4 +40,50 @@ export function formatOrganismAbbreviation (organism: OrganismEntry) {
     }
 
     return organismAbbr
+}
+
+export function formatEntityTypesFromStats (stats: Record<string, Record<string, number>>) {
+    const types: SearchResultAction[] = []
+
+    if (stats.activated['1'] !== undefined) {
+        types.push({
+            icon: 'mdi-graph',
+            text: 'binary interactions',
+            count: stats.activated['1'],
+            color: 'yellow lighten-3',
+            dark: false
+        })
+    }
+
+    if (stats.activated['2'] !== undefined) {
+        types.push({
+            icon: 'mdi-cube-unfolded',
+            text: 'complexes',
+            count: stats.activated['2'],
+            color: 'purple lighten-4',
+            dark: false
+        })
+    }
+
+    if (stats.activated['4'] !== undefined) {
+        types.push({
+            icon: 'mdi-map-marker',
+            text: 'post-translational modifications',
+            count: stats.activated['4'],
+            color: 'orange lighten-3',
+            dark: false
+        })
+    }
+
+    if (stats.activated['3'] !== undefined) {
+        types.push({
+            icon: 'mdi-flask-outline',
+            text: 'chemical interactions',
+            count: stats.activated['3'],
+            color: 'green lighten-3',
+            dark: false
+        })
+    }
+
+    return types
 }

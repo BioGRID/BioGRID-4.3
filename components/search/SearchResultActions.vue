@@ -28,56 +28,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { SearchResultAction } from '@/utilities/types'
+import { formatEntityTypesFromStats } from '@/utilities/formatting'
 
 @Component
 export default class SearchResultActions extends Vue {
     @Prop({ type: Object, default: undefined }) private stats!: Record<string, Record<string, number>>
 
     get actions () {
-        const actions: SearchResultAction[] = []
-
-        if (this.stats.activated['1'] !== undefined) {
-            actions.push({
-                icon: 'mdi-graph',
-                text: 'interactions',
-                count: this.stats.activated['1'],
-                color: 'yellow lighten-3',
-                dark: false
-            })
-        }
-
-        if (this.stats.activated['2'] !== undefined) {
-            actions.push({
-                icon: 'mdi-cube-unfolded',
-                text: 'complexes',
-                count: this.stats.activated['2'],
-                color: 'purple lighten-4',
-                dark: false
-            })
-        }
-
-        if (this.stats.activated['4'] !== undefined) {
-            actions.push({
-                icon: 'mdi-map-marker',
-                text: 'post-translational modifications',
-                count: this.stats.activated['4'],
-                color: 'orange lighten-3',
-                dark: false
-            })
-        }
-
-        if (this.stats.activated['3'] !== undefined) {
-            actions.push({
-                icon: 'mdi-flask-outline',
-                text: 'chemical interactions',
-                count: this.stats.activated['3'],
-                color: 'green lighten-3',
-                dark: false
-            })
-        }
-
-        return actions
+        return formatEntityTypesFromStats(this.stats)
     }
 }
 </script>
