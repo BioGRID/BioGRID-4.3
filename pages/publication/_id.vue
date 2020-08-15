@@ -22,7 +22,7 @@
                         class="pa-3 mt-4 mt-md-0 ml-0 ml-md-4"
                         height="100%"
                     >
-                        <h1>STAT DETAILS</h1>
+                        <h1>STAT BLOCK</h1>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim blandit volutpat maecenas volutpat blandit aliquam. Nisl pretium fusce id velit ut. Purus in mollis nunc sed id semper risus in.
                     </v-card>
                 </v-col>
@@ -31,12 +31,7 @@
                 <v-col
                     cols="12"
                 >
-                    <v-card
-                        class="pa-3 mt-4 mt-md-4"
-                        height="60px"
-                    >
-                    <h1>Curated Data Selector</h1>
-                    </v-card>
+                    <ViewSelector :stats="pubInfo.stats" />
                 </v-col>
             </v-row>
             <v-row no-gutters>
@@ -44,10 +39,10 @@
                     cols="12"
                 >
                     <v-card
-                        class="pa-3 mt-4"
+                        class="pa-3 mt-2"
                         height="2000px"
                     >
-                    <h1>TABLE BLOCK</h1>
+                    <h1>VIEW BLOCK</h1>
                     </v-card>
                 </v-col>
             </v-row>
@@ -59,12 +54,14 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { DatasetSearchResult } from '@/utilities/types'
 import DatasetDetails from '@/components/results/DatasetDetails.vue'
+import ViewSelector from '@/components/results/ViewSelector.vue'
 import AlertBar from '@/components/content/AlertBar.vue'
 
 @Component({
     components: {
         DatasetDetails,
-        AlertBar
+        AlertBar,
+        ViewSelector
     }
 })
 export default class PublicationResulttwoPage extends Vue {

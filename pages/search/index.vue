@@ -19,7 +19,7 @@
                     </h1>
                     <div class="ml-2">
                         Your search returned
-                        <span class="font-weight-bold red--text text--darken-3">{{ totalHits }}</span> total results.
+                        <span class="font-weight-bold red--text text--darken-3">{{ totalHits }}{{ totalHits > maxPossibleHits ? '+' : '' }}</span> total results.
                         Currently showing results <span class="font-weight-bold red--text text--darken-3">{{ startRange }}</span>
                         through <span class="font-weight-bold red--text text--darken-3">{{ endRange }}</span> below ...
                     </div>
@@ -116,7 +116,7 @@
 
 <script lang="ts">
 import { Component, Vue, State, Watch } from 'nuxt-property-decorator'
-import { SelectOption, OrganismMap, SearchRequest } from '@/utilities/types'
+import { SelectOption, OrganismMap, SearchRequest, SearchTypeOptions, EntitiesOptions } from '@/utilities/types'
 import ChemicalResult from '@/components/search/ChemicalResult.vue'
 import PGroupResult from '@/components/search/PGroupResult.vue'
 import AlertBar from '@/components/content/AlertBar.vue'
@@ -137,7 +137,7 @@ export default class SearchPage extends Vue {
     private organismList: string[] = [];
     private isPending: boolean = true;
     private searchTerms: string = '';
-    private searchType: string = 'pg';
+    private searchType: SearchTypeOptions = SearchTypeOptions.PG;
     private organismIDs: number[] = []
     private organismString: string = '';
     private searchResults = []
@@ -145,6 +145,7 @@ export default class SearchPage extends Vue {
     private size: number = 15
     private totalHits: number = 0;
     private isError: boolean = false;
+    private maxPossibleHits: number = 10000;
 
     private head () {
         return {
@@ -184,7 +185,8 @@ export default class SearchPage extends Vue {
             search_type: this.searchType,
             from: (this.page - 1) * this.size,
             size: this.size,
-            preference: this.preference
+            preference: this.preference,
+            entities: EntitiesOptions.WITH
         }
 
         this.$store.dispatch('updateLastSearchType', { value: this.searchType })
@@ -203,11 +205,6 @@ export default class SearchPage extends Vue {
                 const results = resp.data
                 if (results.returned_hits === undefined || results.returned_hits <= 0) {
                     this.$nuxt.$router.push('/help/search/noresults')
-                } else if (results.returned_hits === 1 && this.page === 1) {
-                    // If we only have one result
-                    // just redirect to it, instead of showing search results
-                    const singleResult = results.data[0]
-                    this.$nuxt.$router.push(this.buildSingleResultLink(singleResult))
                 } else {
                     this.searchResults = results.data
                     this.totalHits = results.total_hits
@@ -217,18 +214,6 @@ export default class SearchPage extends Vue {
         } catch (error) {
             this.isError = true
         }
-    }
-
-    private buildSingleResultLink (singleResult: any) {
-        if (this.searchType === 'chem') {
-            return '/chemical/' + String(singleResult.chemical_id)
-        } else if (this.searchType === 'pub') {
-            return '/publication/' + String(singleResult.dataset_id)
-        } else if (this.searchType === 'pg' || this.searchType === 'go') {
-            return '/protein/' + String(singleResult.pgroup_id)
-        }
-
-        return ''
     }
 
     private fetchProcessedSearchTerms () {
@@ -258,11 +243,15 @@ export default class SearchPage extends Vue {
             }
         }
 
-        if (searchType !== null) {
-            return searchType
+        if (searchType === 'chem') {
+            return SearchTypeOptions.CHEM
+        } else if (searchType === 'pub') {
+            return SearchTypeOptions.PUB
+        } else if (searchType === 'go') {
+            return SearchTypeOptions.GO
         }
 
-        return 'pg'
+        return SearchTypeOptions.PG
     }
 
     private loadOrganismListAndIDs () {
@@ -296,10 +285,6 @@ export default class SearchPage extends Vue {
 
     private isValidSearch () {
         if (this.searchTerms === '') {
-            return false
-        }
-
-        if (this.searchType === '') {
             return false
         }
 

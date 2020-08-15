@@ -46,7 +46,7 @@
                         {{ datasetAuthors }}
                     </p>
                     <v-btn
-                        depressed
+                        outlined
                         x-small
                         color="primary"
                         class="mt-2"
@@ -62,14 +62,14 @@
                             v-for="(affiliation,i) in datasetAffiliations"
                             :key="i"
                             dark
-                            color="primary"
+                            color="primary lighten-1"
                             class="pa-3 mt-1 body-2"
                         >
                             {{ affiliation }}
                         </v-sheet>
                     </div>
                 </div>
-                <p v-if="dataset.abstract.length > 0 && !datasetCollapsed" class="body-1 mb-2">
+                <div v-if="dataset.abstract.length > 0 && !datasetCollapsed" class="body-1 mb-2">
                     <v-sheet
                         color="grey lighten-3"
                         class="pa-3"
@@ -100,14 +100,14 @@
                             </v-btn>
                         </div>
                     </v-sheet>
-                </p>
+                </div>
 
                 <div>
                     <span v-if="keywords.length > 0 && !datasetCollapsed" class="subtitle-2 font-weight-medium mb-0">
                         <v-btn
-                            depressed
+                            outlined
                             x-small
-                            color="quaternary lighten-5"
+                            color="quaternary"
                             @click="showKeywords = !showKeywords"
                         >
                             {{ showKeywords ? 'Hide' : 'Show' }} Keywords
@@ -118,9 +118,9 @@
                     </span>
                     <span v-if="meshTerms.length > 0 && !datasetCollapsed" class="subtitle-2 font-weight-medium mb-0">
                         <v-btn
-                            depressed
+                            outlined
                             x-small
-                            color="tertiary lighten-1"
+                            color="tertiary darken-3"
                             @click="showMeshTerms = !showMeshTerms"
                         >
                             {{ showMeshTerms ? 'Hide' : 'Show' }} Mesh Terms
