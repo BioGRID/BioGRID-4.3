@@ -1,5 +1,8 @@
-# BioGRID
-This repository contains the entire codebase for the BioGRID web application.
+# BioGRID 4.3
+This repository contains the entire codebase for the BioGRID 4.3 web application.
+
+## STATUS
+* IN PROGRESS
 
 ## Requirements
 * GIT 2.23+ (https://git-scm.com/download)
