@@ -3,6 +3,7 @@ This repository contains the entire codebase for the BioGRID 4.3 web application
 
 ## STATUS
 * IN PROGRESS
+* ALPHA 0.0.5
 
 ## Requirements
 * GIT 2.23+ (https://git-scm.com/download)
